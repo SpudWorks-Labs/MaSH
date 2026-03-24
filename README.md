@@ -40,9 +40,11 @@ python src/main.py
 ## Phase Roadmap
 **Phase 1; The Terminal Emulator:**
     A customizable terminal prototype built in Python.
+
 **Phase 2; The Workforce:**
     Implementation of the AI, Project and Git integration
     tools.
+    
 **Phase 3: Mashed Together:**
     Standalone, high-performance version of *MaSH Terminal*
     using Rust.
