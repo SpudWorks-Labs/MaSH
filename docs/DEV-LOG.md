@@ -16,6 +16,11 @@
     - The ROADMAP for the first phase has been mapped out.
     - Starting to write the codes boilerplate.
 
+* 21:11
+    - Phase 1A has been completed (Interactive Prompt Loop)
+      now moving on to Phase 1B.
+    - `prompt_toolkit` was added to the requirements.
+
 
 ## TO-DO
 [!!!!!!] Make first tiny prototype.

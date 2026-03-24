@@ -16,7 +16,7 @@ intercept SpudCommands and return a placeholder message or
 attempt to execute the command and allows for customization
 with a `mash` file.
 
-### 1.A: The Interactive Loop
+### 1.A: The Interactive Loop (COMPLETED)
 Introduces a prompt menu using `prompt_toolkit` that runs
 in an infinite loop until the user types `exit`.
 
