@@ -44,12 +44,12 @@ python src/main.py
 **Phase 2; The Workforce:**
     Implementation of the AI, Project and Git integration
     tools.
-    
-**Phase 3: Mashed Together:**
+
+**Phase 3; Mashed Together:**
     Standalone, high-performance version of *MaSH Terminal*
     using Rust.
 
-You can view the [ARCHITECTURE](docs/ARCHITECTURE.md) to learn more!
+For more info, check [ARCHITECTURE](docs/ARCHITECTURE.md)
 
 ---
 
