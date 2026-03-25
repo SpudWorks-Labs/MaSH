@@ -30,6 +30,10 @@ If not, see <https://www.gnu.org/licenses/>
 """
 
 
+# ~ Import System Modules. ~ #
+import os
+import subprocess
+
 # ~ Import Third-Party Modules. ~ #
 from prompt_toolkit import prompt
 
@@ -41,6 +45,7 @@ class Mash:
     Functions:
         __init__ : Initilaize the terminal program.
         execute  : Execute the main terminal loop.
+        process_command : Process the users command.
     """
 
     def __init__(self):
@@ -53,7 +58,61 @@ class Mash:
         """
 
         self.prompt = ">>> "
+        self.cwd = os.getcwd()
         self._is_running = True
+
+    def process_command(self, user_input: str):
+        """
+        ~ Process and execute the users command. ~ #
+
+        Arguments:
+            - user_input (str) : The command received.
+        """
+
+        # ~ A SpudCommand was issued. ~ #
+        if user_input.startswith('@>'):
+            # ~ The AI menu. ~ #
+            if user_input.lower() == '@>ai':
+                print("AI menu in progress...")
+            
+            # ~ The project management menu. ~ #
+            elif user_input.lower() == '@>projects':
+                print("Projects menu in progress...")
+
+            # ~ The project repo menu. ~ #
+            elif user_input.lower() == '@>repos':
+                print("Repos menu in progress...")
+
+        # ~ System command was issued. ~ #
+        else:
+            # ~ Handle Change Directory ~ #
+            # ~ command seperately.     ~ #
+            if user_input.startswith('cd'):
+                parts = user_input.split(maxsplit=1)
+
+                # ~ An empty `cd` points to the ~ #
+                # ~ home directory.             ~ #
+                strip_parts = parts[1].strip()
+                if len(parts) == 1 or strip_parts == "":
+                    path = os.path.expanduser('~')
+                # ~ Expand the given path. ~ #
+                else:
+                    path = os.path.expanduser(strip_parts)
+
+                # ~ Attempt to change the directory ~ #
+                # ~ to the given path.              ~ #
+                try:
+                    os.chdir(path)
+                    self.cwd = os.getcwd()
+                except Exception as e:
+                    print(f"MaSH cd Error: {e}")
+
+            # ~ Attempt to run the user ~ #
+            # ~ input as a command.     ~ #
+            try:
+                subprocess.run(user_input, shell=True)
+            except Exception as e:
+                print(f"MaSH Error: {e}")
 
     def execute(self):
         """
@@ -62,14 +121,15 @@ class Mash:
 
         # ~ Main program loop. ~ #
         while self._is_running:
-            user_input = prompt(self.prompt).lower()
+            user_input = prompt(self.prompt)
 
             # ~ Check the command. ~ #
-            if user_input == 'exit':
+            if user_input.lower() == 'exit':
                 self._is_running = False
                 continue
 
-            print(user_input)
+            # ~ Process the command. ~ #
+            self.process_command(user_input)
 
 
 if __name__ == '__main__':

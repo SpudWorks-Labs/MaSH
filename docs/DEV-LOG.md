@@ -21,6 +21,15 @@
       now moving on to Phase 1B.
     - `prompt_toolkit` was added to the requirements.
 
+*2026/03/25*
+* 05:00
+    - Phase 1B has been finished and I might want to change
+      how the paths are handled withing the program.
+    - I also might want to make the command section a bit
+      more modulated.
+    - Now moving onto Phase 1C for a customization script.
+
 
 ## TO-DO
-[!!!!!!] Make first tiny prototype.
+[...] Modulate the `Mash.process_commands()` a bit more.
+[.] Look into handling the paths in a more robust way.
