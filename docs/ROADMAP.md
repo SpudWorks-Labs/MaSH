@@ -21,7 +21,7 @@ Introduces a prompt menu using `prompt_toolkit` that runs
 in an infinite loop until the user types `exit`.
 
 ### 1.B: The SpudHead Interceptor
-This add the "Logic Gate" of the terminal with a simple
+This adds the "Logic Gate" of the terminal with a simple
 python method that checks if the input starts with the
 PotatoHead (`@>`) and outputs a placeholder message based
 on the command. If there was no SpudCommand, then execute
