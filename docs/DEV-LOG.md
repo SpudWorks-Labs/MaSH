@@ -33,9 +33,11 @@
 * 15:10
     - The README has been updated to include the venv
       initialization and dependency installation.
-      
+
+* 15:34
+    - Modulated the `Mash.process_commands()` for smaller
+      methods and easier to read code.
 
 
 ## TO-DO
-[...] Modulate the `Mash.process_commands()` a bit more.
 [.] Look into handling the paths in a more robust way.

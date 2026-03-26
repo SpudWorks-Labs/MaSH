@@ -61,6 +61,66 @@ class Mash:
         self.cwd = os.getcwd()
         self._is_running = True
 
+    def process_spudcommand(self, command: str):
+        """
+        ~ Process the SpudCommand and display the menu. ~
+
+        Arguments:
+            - command (str) : The command to execute.
+        """
+
+        # ~ The AI menu. ~ #
+        if command.lower() == 'ai':
+            print("AI menu in progress...")
+        
+        # ~ The project management menu. ~ #
+        elif command.lower() == 'projects':
+            print("Projects menu in progress...")
+
+        # ~ The project repo menu. ~ #
+        elif command.lower() == 'repos':
+            print("Repos menu in progress...")
+
+        else:
+            print(f"Error: The SpudCommand '{command}' does not exist!")
+
+    def change_directory(self, path: list):
+        # ~ Empty `cd` returns the home directory. ~ #
+        path = path[0].strip()
+        
+        if path == '~' or path == "":
+            path = os.path.expanduser('~')
+        # ~ Expand the given path. ~ #
+        else:
+            path = os.path.expanduser(path)
+
+        # ~ Attempt to change the directory. ~ #
+        try:
+            os.chdir(path)
+            self.cwd = os.getcwd()
+            
+        except Exception as e:
+            print(f"MaSH cd Error: {e}")
+
+    def process_syscommand(self, command: str):
+        """
+        ~ Try to process the system command from user. ~
+
+        Arguments:
+            - command (str) : System command to execute.
+        """
+
+        # ~ Handle Change Directory command seperately. ~ #
+        if command.startswith('cd'):
+            path = command.split(maxsplit=2)[1:]
+            self.change_directory(path)
+
+        # ~ Attempt to run the command. ~ #
+        try:
+            subprocess.run(user_input, shell=True)
+        except Exception as e:
+            print(f"MaSH Error: {e}")
+
     def process_command(self, user_input: str):
         """
         ~ Process and execute the users command. ~ #
@@ -71,48 +131,13 @@ class Mash:
 
         # ~ A SpudCommand was issued. ~ #
         if user_input.startswith('@>'):
-            # ~ The AI menu. ~ #
-            if user_input.lower() == '@>ai':
-                print("AI menu in progress...")
-            
-            # ~ The project management menu. ~ #
-            elif user_input.lower() == '@>projects':
-                print("Projects menu in progress...")
+            command = user_input.replace("@>", "")
 
-            # ~ The project repo menu. ~ #
-            elif user_input.lower() == '@>repos':
-                print("Repos menu in progress...")
+            self.process_spudcommand(command)
 
         # ~ System command was issued. ~ #
         else:
-            # ~ Handle Change Directory ~ #
-            # ~ command seperately.     ~ #
-            if user_input.startswith('cd'):
-                parts = user_input.split(maxsplit=1)
-
-                # ~ An empty `cd` points to the ~ #
-                # ~ home directory.             ~ #
-                strip_parts = parts[1].strip()
-                if len(parts) == 1 or strip_parts == "":
-                    path = os.path.expanduser('~')
-                # ~ Expand the given path. ~ #
-                else:
-                    path = os.path.expanduser(strip_parts)
-
-                # ~ Attempt to change the directory ~ #
-                # ~ to the given path.              ~ #
-                try:
-                    os.chdir(path)
-                    self.cwd = os.getcwd()
-                except Exception as e:
-                    print(f"MaSH cd Error: {e}")
-
-            # ~ Attempt to run the user ~ #
-            # ~ input as a command.     ~ #
-            try:
-                subprocess.run(user_input, shell=True)
-            except Exception as e:
-                print(f"MaSH Error: {e}")
+            self.process_syscommand(user_input)
 
     def execute(self):
         """
