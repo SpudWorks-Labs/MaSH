@@ -44,8 +44,11 @@
     - Custom color is needed next before this phase
       is completed.
 
+* 16:23
+    - Custom colors are available and this marks the
+      basic completion of this phase.
+
 
 ## TO-DO
-[!!] Add custom color customization to `.mash`.
 [!] Move the command methods into a `core/` module.
 [.] Look into handling the paths in a more robust way.

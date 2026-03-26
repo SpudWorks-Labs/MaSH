@@ -37,6 +37,7 @@ import json
 
 # ~ Import Third-Party Modules. ~ #
 from prompt_toolkit import prompt
+from prompt_toolkit.styles import Style
 
 
 class Mash:
@@ -58,6 +59,8 @@ class Mash:
             _is_running : The state of the terminal.
         """
 
+        os.system("clear" if os.name != 'nt' else "cls")
+        
         self.config = self.load_config()
         self.cwd = os.getcwd()
         self._is_running = True
@@ -65,10 +68,12 @@ class Mash:
     def create_config(self, config_file: str):
         stock_info = {
             "prompt": ">>>",
+            "style": "#FF69B4"
         }
 
         with open(config_file, 'w') as cfg_file:
-            cfg_file.write(json.dumps(stock_info))
+            json.dump(stock_info, cfg_file, indent=4)
+            cfg_file.write('\n')
 
     def load_config(self):
         """
@@ -88,6 +93,10 @@ class Mash:
             try:
                 if not config["prompt"].endswith(" "):
                     config["prompt"] += " "
+
+                config["style"] = Style.from_dict({
+                    "": config["style"]
+                })
 
             except KeyError as ke:
                 error_msg = f"Primary Key not found: {ke}"
@@ -182,7 +191,7 @@ class Mash:
 
         # ~ Main program loop. ~ #
         while self._is_running:
-            user_input = prompt(self.config["prompt"])
+            user_input = prompt(self.config["prompt"], style=self.config["style"])
 
             # ~ Check the command. ~ #
             if user_input.lower() == 'exit':
