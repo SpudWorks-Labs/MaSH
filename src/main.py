@@ -33,6 +33,7 @@ If not, see <https://www.gnu.org/licenses/>
 # ~ Import System Modules. ~ #
 import os
 import subprocess
+import json
 
 # ~ Import Third-Party Modules. ~ #
 from prompt_toolkit import prompt
@@ -57,9 +58,43 @@ class Mash:
             _is_running : The state of the terminal.
         """
 
-        self.prompt = ">>> "
+        self.config = self.load_config()
         self.cwd = os.getcwd()
         self._is_running = True
+
+    def create_config(self, config_file: str):
+        stock_info = {
+            "prompt": ">>>",
+        }
+
+        with open(config_file, 'w') as cfg_file:
+            cfg_file.write(json.dumps(stock_info))
+
+    def load_config(self):
+        """
+        ~ Load the config file create it if non-existant. ~
+
+        Returns:
+            - dict : The configuration information.
+        """
+        config_file = os.path.expanduser('~') + '/.mash'
+
+        if not os.path.exists(config_file):
+            self.create_config(config_file)
+
+        with open (config_file, 'r') as cfg_file:
+            config = json.loads(cfg_file.read())
+            
+            try:
+                if not config["prompt"].endswith(" "):
+                    config["prompt"] += " "
+
+            except KeyError as ke:
+                error_msg = f"Primary Key not found: {ke}"
+                print("MaSH Error: {error_msg}")
+
+            return config
+
 
     def process_spudcommand(self, command: str):
         """
@@ -98,7 +133,7 @@ class Mash:
         try:
             os.chdir(path)
             self.cwd = os.getcwd()
-            
+
         except Exception as e:
             print(f"MaSH cd Error: {e}")
 
@@ -114,10 +149,11 @@ class Mash:
         if command.startswith('cd'):
             path = command.split(maxsplit=2)[1:]
             self.change_directory(path)
+            return
 
         # ~ Attempt to run the command. ~ #
         try:
-            subprocess.run(user_input, shell=True)
+            subprocess.run(command, shell=True)
         except Exception as e:
             print(f"MaSH Error: {e}")
 
@@ -146,7 +182,7 @@ class Mash:
 
         # ~ Main program loop. ~ #
         while self._is_running:
-            user_input = prompt(self.prompt)
+            user_input = prompt(self.config["prompt"])
 
             # ~ Check the command. ~ #
             if user_input.lower() == 'exit':

@@ -20,7 +20,7 @@ with a `mash` file.
 Introduces a prompt menu using `prompt_toolkit` that runs
 in an infinite loop until the user types `exit`.
 
-### 1.B: The SpudHead Interceptor
+### 1.B: The SpudHead Interceptor (COMPLETED)
 This adds the "Logic Gate" of the terminal with a simple
 python method that checks if the input starts with the
 PotatoHead (`@>`) and outputs a placeholder message based
@@ -30,7 +30,7 @@ paid features and productivity tools.
 
 **NOTE:** Intercept `cd` and use `os.chdir()` to make the command functional.
 
-### 1.C: The Configurations
+### 1.C: The Configurations (IN-PROGRESS)
 A simple configuration file `.mash` that allows to change
 the prompt and the color of it, with extra capabilities in
 the future.

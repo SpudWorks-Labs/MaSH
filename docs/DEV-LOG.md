@@ -38,6 +38,14 @@
     - Modulated the `Mash.process_commands()` for smaller
       methods and easier to read code.
 
+* 16:07
+    - Basic configuration from a `.mash` file is now
+      available, and Phase 1C is technically finished.
+    - Custom color is needed next before this phase
+      is completed.
+
 
 ## TO-DO
+[!!] Add custom color customization to `.mash`.
+[!] Move the command methods into a `core/` module.
 [.] Look into handling the paths in a more robust way.
