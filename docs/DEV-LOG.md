@@ -29,6 +29,12 @@
       more modulated.
     - Now moving onto Phase 1C for a customization script.
 
+*2026/03/26*
+* 15:10
+    - The README has been updated to include the venv
+      initialization and dependency installation.
+      
+
 
 ## TO-DO
 [...] Modulate the `Mash.process_commands()` a bit more.

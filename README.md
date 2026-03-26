@@ -31,6 +31,13 @@ versioning.
 git clone https://github.com/SpudWorks-Labs/MaSH
 cd MaSH
 
+# ~ Next, create a virtual environment. ~ #
+python -m venv .name_of_env
+source .name_of_env/bin/activate
+
+# ~ Then, install the required dependencies. ~ #
+pip install -r requirements.txt
+
 # ~ Finally, run the program. ~ #
 python src/main.py
 ```
