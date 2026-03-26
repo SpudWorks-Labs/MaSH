@@ -48,7 +48,14 @@
     - Custom colors are available and this marks the
       basic completion of this phase.
 
+* 20:31
+    - The welcome screen was created.
+    - Next I need to create place holder menus for the
+      SpudCommands.
+
 
 ## TO-DO
+[!!!] Create placeholder menues for each command.
+[!] Create a help SpudCommand.
 [!] Move the command methods into a `core/` module.
 [.] Look into handling the paths in a more robust way.
