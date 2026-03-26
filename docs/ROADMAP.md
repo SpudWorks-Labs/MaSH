@@ -30,7 +30,7 @@ paid features and productivity tools.
 
 **NOTE:** Intercept `cd` and use `os.chdir()` to make the command functional.
 
-### 1.C: The Configurations (IN-PROGRESS)
+### 1.C: The Configurations (COMPLETED)
 A simple configuration file `.mash` that allows to change
 the prompt and the color of it, with extra capabilities in
 the future.
