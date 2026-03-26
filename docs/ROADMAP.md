@@ -4,7 +4,7 @@ Here is the planned road for this project.
 
 ---
 
-## Phase 1: The Terminal Emulator:
+## Phase 1: The Terminal Emulator: (IN-PROGRESS)
 This is the foundation of the program and allows the rest
 to exist and fall into place.
 * **Tech:** Using `prompt_toolkit` for the TUI rendering
