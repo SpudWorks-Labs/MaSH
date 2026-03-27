@@ -39,6 +39,10 @@ import json
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 
+# ~ Import Local Modules. ~ #
+from core.proc_commands import process_command
+from core.mash_config import load_config
+
 
 class Mash:
     """
@@ -47,7 +51,7 @@ class Mash:
     Functions:
         __init__ : Initilaize the terminal program.
         execute  : Execute the main terminal loop.
-        process_command : Process the users command.
+        welcome_message : Display the welcome message.
     """
 
     def __init__(self):
@@ -60,7 +64,7 @@ class Mash:
         """
 
         self.welcome_message()
-        self.config = self.load_config()
+        self.config = load_config()
         self.cwd = os.getcwd()
         self._is_running = True
 
@@ -81,135 +85,19 @@ class Mash:
             "",
             "<b><style fg='#FF69B4'>Welcome to MaSH: The Productive Terminal</style></b>"
         ]
+
         for line in mash_logo_lines:
             if line.startswith('<'):
                 print_formatted_text(HTML(line))
             else:
                 print_formatted_text(line)
             time.sleep(0.07)
+            
         print_formatted_text(HTML("<ansiblue>------------------------------------------</ansiblue>"))
         time.sleep(0.1)
         print_formatted_text(HTML("<ansigreen>Type your command or <b>exit</b> to leave MaSH</ansigreen>"), end='\n\n')
         time.sleep(0.2)
 
-    def create_config(self, config_file: str):
-        stock_info = {
-            "prompt": ">>>",
-            "style": "#FF69B4"
-        }
-
-        with open(config_file, 'w') as cfg_file:
-            json.dump(stock_info, cfg_file, indent=4)
-            cfg_file.write('\n')
-
-    def load_config(self):
-        """
-        ~ Load the config file create it if non-existant. ~
-
-        Returns:
-            - dict : The configuration information.
-        """
-        config_file = os.path.expanduser('~') + '/.mash'
-
-        if not os.path.exists(config_file):
-            self.create_config(config_file)
-
-        with open (config_file, 'r') as cfg_file:
-            config = json.loads(cfg_file.read())
-            
-            try:
-                if not config["prompt"].endswith(" "):
-                    config["prompt"] += " "
-
-                config["style"] = Style.from_dict({
-                    "": config["style"]
-                })
-
-            except KeyError as ke:
-                error_msg = f"Primary Key not found: {ke}"
-                print("MaSH Error: {error_msg}")
-
-            return config
-
-
-    def process_spudcommand(self, command: str):
-        """
-        ~ Process the SpudCommand and display the menu. ~
-
-        Arguments:
-            - command (str) : The command to execute.
-        """
-
-        # ~ The AI menu. ~ #
-        if command.lower() == 'ai':
-            print("AI menu in progress...")
-        
-        # ~ The project management menu. ~ #
-        elif command.lower() == 'projects':
-            print("Projects menu in progress...")
-
-        # ~ The project repo menu. ~ #
-        elif command.lower() == 'repos':
-            print("Repos menu in progress...")
-
-        else:
-            print(f"Error: The SpudCommand '{command}' does not exist!")
-
-    def change_directory(self, path: list):
-        # ~ Empty `cd` returns the home directory. ~ #
-        path = path[0].strip()
-        
-        if path == '~' or path == "":
-            path = os.path.expanduser('~')
-        # ~ Expand the given path. ~ #
-        else:
-            path = os.path.expanduser(path)
-
-        # ~ Attempt to change the directory. ~ #
-        try:
-            os.chdir(path)
-            self.cwd = os.getcwd()
-
-        except Exception as e:
-            print(f"MaSH cd Error: {e}")
-
-    def process_syscommand(self, command: str):
-        """
-        ~ Try to process the system command from user. ~
-
-        Arguments:
-            - command (str) : System command to execute.
-        """
-
-        # ~ Handle Change Directory command seperately. ~ #
-        if command.startswith('cd'):
-            path = command.split(maxsplit=2)[1:]
-            self.change_directory(path)
-            return
-
-        # ~ Attempt to run the command. ~ #
-        try:
-            subprocess.run(command, shell=True)
-        except Exception as e:
-            print(f"MaSH Error: {e}")
-
-    def process_command(self, user_input: str):
-        """
-        ~ Process and execute the users command. ~ #
-
-        Arguments:
-            - user_input (str) : The command received.
-        """
-
-        # ~ A SpudCommand was issued. ~ #
-        if user_input.startswith('@>'):
-            command = user_input.replace("@>", "")
-
-            self.process_spudcommand(command)
-
-        # ~ System command was issued. ~ #
-        else:
-            self.process_syscommand(user_input)
 
     def execute(self):
         """
@@ -220,13 +108,22 @@ class Mash:
         while self._is_running:
             user_input = prompt(self.config["prompt"], style=self.config["style"])
 
-            # ~ Check the command. ~ #
+            # ~ Exit the terminal. ~ #
             if user_input.lower() == 'exit':
                 self._is_running = False
                 continue
 
+            # ~ Check the current directoy. ~ #
+            elif user_input.lower() == 'cwd':
+                print(self.cwd)
+                continue
+
             # ~ Process the command. ~ #
-            self.process_command(user_input)
+            current_path = process_command(user_input)
+
+            # ~ Path returned if a `cd` command ran. ~ #
+            if current_path:
+                self.cwd = current_path
 
 
 if __name__ == '__main__':

@@ -53,9 +53,16 @@
     - Next I need to create place holder menus for the
       SpudCommands.
 
+*2026/03/27*
+* 15:08
+    - Implemented a "help" SpudCommand.
+
+* 15:33
+    - Moved the command processing logic into its own file
+      found wihin `core/` as well as the `.mash` config
+      logic.
+
 
 ## TO-DO
-[!!!] Create placeholder menues for each command.
-[!] Create a help SpudCommand.
-[!] Move the command methods into a `core/` module.
-[.] Look into handling the paths in a more robust way.
+[!!!] Create placeholder menus for each command. ~~
+[.] Look into handling the paths in a more robust way. ~
