@@ -35,7 +35,6 @@ import os
 import subprocess
 import json
 
-
 # ~ Import Local Modules. ~ #
 from core.mash_screens import init_screens, prompt_screen
 
