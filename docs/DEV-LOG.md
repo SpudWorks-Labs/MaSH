@@ -2,9 +2,10 @@
 
 **NOTE:** All time is in ***UTC***
 
+---
 
 ## Developer Logs
-*2026/03/24*
+### 2026/03/24
 * 15:38
     - Revived the project.
 
@@ -21,7 +22,9 @@
       now moving on to Phase 1B.
     - `prompt_toolkit` was added to the requirements.
 
-*2026/03/25*
+---
+
+### 2026/03/25
 * 05:00
     - Phase 1B has been finished and I might want to change
       how the paths are handled withing the program.
@@ -29,7 +32,9 @@
       more modulated.
     - Now moving onto Phase 1C for a customization script.
 
-*2026/03/26*
+---
+
+### 2026/03/26
 * 15:10
     - The README has been updated to include the venv
       initialization and dependency installation.
@@ -53,7 +58,9 @@
     - Next I need to create place holder menus for the
       SpudCommands.
 
-*2026/03/27*
+---
+
+### 2026/03/27
 * 15:08
     - Implemented a "help" SpudCommand.
 
@@ -80,6 +87,7 @@
     - The paths are now handled using `pathlib.Path` for
       cleaner and simpler code.
 
+---
 
 ## TO-DO
-[!!!] Create placeholder menus for each command. ~~ [IN-PROGRESS]
+**[!!!]** Create placeholder menus for each command. ~~ [IN-PROGRESS]
