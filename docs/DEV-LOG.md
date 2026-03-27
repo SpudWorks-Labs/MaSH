@@ -66,6 +66,10 @@
     - Modulated the code more with a `core/mash_screens.py`
       file for displaying the menu screens.
 
+* 17:00
+    - Moved the welcome message method into
+      `core/mash_screens.py` to keep the main method small.
+
 
 ## TO-DO
 [!!!] Create placeholder menus for each command. ~~ [IN-PROGRESS]

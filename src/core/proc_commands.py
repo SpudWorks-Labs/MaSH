@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: proc_commands.py
                  Date: 2026/03/24
-            Version: 0.1.0-2026.03.24
+            Version: 0.1.0-2026.03.27
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -73,6 +73,13 @@ def process_syscommand(command: str):
         print(f"MaSH Error: {e}")
 
 def change_directory(path: list):
+    """
+    ~ Change the current working directory to the path ~
+
+    Arguments:
+        path (list) : The path the user wants to travel to.
+    """
+
     # ~ Empty `cd` returns the home directory. ~ #
     path = path[0].strip()
     

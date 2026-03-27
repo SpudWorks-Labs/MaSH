@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                   File: main.py
                  Date: 2026/03/24
-            Version: 0.1.0-2026.03.24
+            Version: 0.1.0-2026.03.27
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -36,7 +36,9 @@ import subprocess
 import json
 
 # ~ Import Local Modules. ~ #
-from core.mash_screens import init_screens, prompt_screen
+from core.mash_screens import (
+    init_screens, welcome_message, prompt_screen
+)
 
 
 class Mash:
@@ -58,39 +60,8 @@ class Mash:
             _is_running : The state of the terminal.
         """
 
-        self.welcome_message()
+        welcome_message()
         init_screens()
-
-    def welcome_message(self):
-        import time
-        from prompt_toolkit import print_formatted_text, HTML
-
-        os.system("clear" if os.name != 'nt' else "cls")
-
-        # Animated MaSH Welcome Screen using prompt_toolkit
-        mash_logo_lines = [            
-            r" ______   ______   _____   ________  ___   ___ ",
-            r"|      | |      | / __  | /   _____)|   | |   |",
-            r"|   ^   V   ^   ||_/  | |(   (_____ |   |_|   |",
-            r"|  |  |   |  |  | ___/  |(______   )|    _    |",
-            r"|  |   | |   |  |/ __   | ______)  )|   | |   |",
-            r"|___|   V   |___||___/|_|(________/ |___| |___|",
-            "",
-            "<b><style fg='#FF69B4'>Welcome to MaSH: The Productive Terminal</style></b>"
-        ]
-
-        for line in mash_logo_lines:
-            if line.startswith('<'):
-                print_formatted_text(HTML(line))
-            else:
-                print_formatted_text(line)
-            time.sleep(0.07)
-            
-        print_formatted_text(HTML("<ansiblue>------------------------------------------</ansiblue>"))
-        time.sleep(0.1)
-        print_formatted_text(HTML("<ansigreen>Type your command or <b>exit</b> to leave MaSH</ansigreen>"), end='\n\n')
-        time.sleep(0.2)
-
 
     def execute(self):
         """
