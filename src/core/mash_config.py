@@ -34,9 +34,6 @@ If not, see <https://www.gnu.org/licenses/>
 import json
 import os
 
-# ~ Import Third-Party Modules. ~ #
-from prompt_toolkit.styles import Style
-
 
 def create_config(config_file: str):
     """
