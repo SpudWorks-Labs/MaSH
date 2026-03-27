@@ -35,13 +35,9 @@ import os
 import subprocess
 import json
 
-# ~ Import Third-Party Modules. ~ #
-from prompt_toolkit import prompt
-from prompt_toolkit.styles import Style
 
 # ~ Import Local Modules. ~ #
-from core.proc_commands import process_command
-from core.mash_config import load_config
+from core.mash_screens import init_screens, prompt_screen
 
 
 class Mash:
@@ -64,8 +60,7 @@ class Mash:
         """
 
         self.welcome_message()
-        self.config = load_config()
-        self.cwd = os.getcwd()
+        init_screens()
         self._is_running = True
 
     def welcome_message(self):
@@ -105,25 +100,7 @@ class Mash:
         """
 
         # ~ Main program loop. ~ #
-        while self._is_running:
-            user_input = prompt(self.config["prompt"], style=self.config["style"])
-
-            # ~ Exit the terminal. ~ #
-            if user_input.lower() == 'exit':
-                self._is_running = False
-                continue
-
-            # ~ Check the current directoy. ~ #
-            elif user_input.lower() == 'cwd':
-                print(self.cwd)
-                continue
-
-            # ~ Process the command. ~ #
-            current_path = process_command(user_input)
-
-            # ~ Path returned if a `cd` command ran. ~ #
-            if current_path:
-                self.cwd = current_path
+        prompt_screen()
 
 
 if __name__ == '__main__':
