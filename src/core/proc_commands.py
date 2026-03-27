@@ -37,7 +37,7 @@ import subprocess
 from pathlib import Path
 
 # ~ Import Local Modules. ~ #
-from core.mash_menus import (
+from plugins.plugin_menus import (
     ai_menu, projects_menu, help_menu
 )
 

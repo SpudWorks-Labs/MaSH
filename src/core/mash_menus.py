@@ -42,21 +42,28 @@ from prompt_toolkit import print_formatted_text, HTML
 # ~ Import Local Modules. ~ #
 from core.proc_commands import process_command
 from core.mash_config import load_config
+from plugins.plugin_menus import copy_config
 
 
 config = None
 cwd = None
+style = None
 
 
-def init_screens():
+def init_menus():
     """
     ~ Initialize the data used for the screens. ~
     """
 
-    global config, cwd
+    global config, cwd, style
 
     config = load_config()
     cwd = os.getcwd()
+    style = Style.from_dict({
+        "": config["style"]
+    })
+
+    copy_config(config, cwd, style)
 
 
 def welcome_message():
@@ -97,10 +104,6 @@ def prompt_menu():
     
     global cwd
 
-    style = Style.from_dict({
-        "": config["style"]
-    })
-
     while True:
         user_input = prompt(config["prompt"], style=style)
 
@@ -118,16 +121,3 @@ def prompt_menu():
 
         if current_path:
             cwd = current_path
-
-
-def ai_menu():
-    print("AI menu in progress...")
-
-def projects_menu():
-    print("Projects menu in progress...")
-
-def help_menu():
-    print("\nHere are the available SpudCommands:")
-    print("\n\t@>ai : AI Assistant settings menu.")
-    print("\t@>projects : Project manager menu.")
-    print("\t@>help : Display this message\n\n")

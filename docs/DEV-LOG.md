@@ -92,7 +92,12 @@
       be a feature in the projects manager.
     - Renamed 'screens' to 'menus' for clarity.
 
+* 21:30
+    - The placeholder menus for the AI and Project
+      Management tools have been created.
+    - Phase 1D has pretty much been finished, the only
+      thing left to do is polishing the code.
+
 ---
 
 ## TO-DO
-**[!!!]** Create placeholder menus for each command. ~~ [IN-PROGRESS]

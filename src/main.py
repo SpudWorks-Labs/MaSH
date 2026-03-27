@@ -61,7 +61,7 @@ class Mash:
         """
 
         welcome_message()
-        init_screens()
+        init_menus()
 
     def execute(self):
         """

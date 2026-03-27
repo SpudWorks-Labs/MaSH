@@ -20,8 +20,6 @@ ever leaving your terminal.
 capabilities.
 * **@>projects**: A built-in manager to track and pivot
 between projects.
-* **@>repos**: Seamless Git integration to handle code
-versioning.
 
 ---
 

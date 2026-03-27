@@ -65,7 +65,7 @@ def load_config():
     if not config_file.exists():
         create_config(str(config_file))
 
-    with open (config_file, 'r') as cfg_file:
+    with open(config_file, 'r') as cfg_file:
         config = json.loads(cfg_file.read())
         
         try:

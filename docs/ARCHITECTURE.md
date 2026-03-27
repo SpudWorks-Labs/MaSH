@@ -14,7 +14,6 @@ assistance, and other productivity tools.
 ### Primary Command Triggers:
 * `@>ai`: Access AI assistants and their specialized tools.
 * `@>projects`: Launch the project management menu.
-* `@>repos`: Configure and manage project repositories.
 
 ---
 

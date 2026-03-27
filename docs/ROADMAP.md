@@ -35,7 +35,7 @@ A simple configuration file `.mash` that allows to change
 the prompt and the color of it, with extra capabilities in
 the future.
 
-### 1.D: The TUI & Visuals (IN-PROGRESS)
+### 1.D: The TUI & Visuals (COMPLETED)
 The full terminal experience. Create a "Welcome Header"
 that displays when MaSH starts. Has menus for the config
 settings and the tools.
