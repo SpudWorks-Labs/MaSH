@@ -70,6 +70,12 @@
     - Moved the welcome message method into
       `src/core/mash_screens.py` to keep the main method small.
 
+* 17:20
+    - Created the [CHANGELOG](CHANGELOG.md) and updated to
+      version 0.6.0-2026.03.27 to document the weeks work.
+    - This can change later today, but a change is marked
+      in-case it becomes unavailable later.
+
 
 ## TO-DO
 [!!!] Create placeholder menus for each command. ~~ [IN-PROGRESS]

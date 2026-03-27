@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                   File: main.py
                  Date: 2026/03/24
-            Version: 0.1.0-2026.03.27
+            Version: 0.6.0-2026.03.27
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
