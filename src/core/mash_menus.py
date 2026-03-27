@@ -90,7 +90,7 @@ def welcome_message():
     time.sleep(0.2)
 
 
-def prompt_screen():
+def prompt_menu():
     """
     ~ Display the prompt menu. ~
     """
@@ -118,3 +118,16 @@ def prompt_screen():
 
         if current_path:
             cwd = current_path
+
+
+def ai_menu():
+    print("AI menu in progress...")
+
+def projects_menu():
+    print("Projects menu in progress...")
+
+def help_menu():
+    print("\nHere are the available SpudCommands:")
+    print("\n\t@>ai : AI Assistant settings menu.")
+    print("\t@>projects : Project manager menu.")
+    print("\t@>help : Display this message\n\n")

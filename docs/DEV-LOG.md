@@ -87,6 +87,11 @@
     - The paths are now handled using `pathlib.Path` for
       cleaner and simpler code.
 
+* 21:03
+    - The `repos` SpudCommand was removed since that will
+      be a feature in the projects manager.
+    - Renamed 'screens' to 'menus' for clarity.
+
 ---
 
 ## TO-DO

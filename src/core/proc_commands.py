@@ -36,6 +36,11 @@ import shlex
 import subprocess
 from pathlib import Path
 
+# ~ Import Local Modules. ~ #
+from core.mash_menus import (
+    ai_menu, projects_menu, help_menu
+)
+
 
 def process_command(user_input: str):
     """
@@ -112,23 +117,15 @@ def process_spudcommand(command: str):
 
     # ~ The AI menu. ~ #
     if command.lower() == 'ai':
-        print("AI menu in progress...")
+        ai_menu()
     
     # ~ The project management menu. ~ #
     elif command.lower() == 'projects':
-        print("Projects menu in progress...")
-
-    # ~ The project repo menu. ~ #
-    elif command.lower() == 'repos':
-        print("Repos menu in progress...")
+        projects_menu()
     
     # ~ Display the help menu. ~ #
     elif command.lower() == 'help':
-        print("\nHere are the available SpudCommands:")
-        print("\n\t@>ai : AI Assistant settings menu.")
-        print("\t@>projects : Project manager menu.")
-        print("\t@>repos : Display project repo menu.")
-        print("\t@>help : Display this message\n\n")
+        help_menu()
 
     else:
         print(f"Error: The SpudCommand '{command}' does not exist!")

@@ -36,8 +36,8 @@ import subprocess
 import json
 
 # ~ Import Local Modules. ~ #
-from core.mash_screens import (
-    init_screens, welcome_message, prompt_screen
+from core.mash_menus import (
+    init_menus, welcome_message, prompt_menu
 )
 
 
@@ -69,7 +69,7 @@ class Mash:
         """
 
         # ~ Main program loop. ~ #
-        prompt_screen()
+        prompt_menu()
 
 
 if __name__ == '__main__':
