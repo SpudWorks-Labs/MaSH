@@ -32,7 +32,9 @@ If not, see <https://www.gnu.org/licenses/>
 
 # ~ Import Standard Modules. ~ #
 import os
+import shlex
 import subprocess
+from pathlib import Path
 
 
 def process_command(user_input: str):
@@ -62,9 +64,13 @@ def process_syscommand(command: str):
     """
 
     # ~ Handle Change Directory command seperately. ~ #
-    if command.startswith('cd'):
-        path = command.split(maxsplit=2)[1:]
-        return change_directory(path)
+    try:
+        parts = shlex.split(command)
+    except ValueError:
+        parts = command.split()
+
+    if parts and parts[0] == 'cd':
+        return change_directory(parts[1:])
 
     # ~ Attempt to run the command. ~ #
     try:
@@ -80,18 +86,17 @@ def change_directory(path: list):
         path (list) : The path the user wants to travel to.
     """
 
-    # ~ Empty `cd` returns the home directory. ~ #
-    path = path[0].strip()
-    
-    if path == '~' or path == "":
-        path = os.path.expanduser('~')
-    # ~ Expand the given path. ~ #
-    else:
-        path = os.path.expanduser(path)
-
-    # ~ Attempt to change the directory. ~ #
     try:
-        os.chdir(path)
+        # ~ Empty path returns the home directory. ~ #
+        target = Path.home()
+
+        # ~ Expand the given path. ~ #
+        if path:
+            target = Path(path[0]).expanduser()
+
+        # ~ Change the directory. ~ #
+        os.chdir(target)
+
         return os.getcwd()
 
     except Exception as e:

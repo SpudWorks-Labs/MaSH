@@ -76,7 +76,10 @@
     - This can change later today, but a change is marked
       in-case it becomes unavailable later.
 
+* 17:50
+    - The paths are now handled using `pathlib.Path` for
+      cleaner and simpler code.
+
 
 ## TO-DO
 [!!!] Create placeholder menus for each command. ~~ [IN-PROGRESS]
-[.] Look into handling the paths in a more robust way. ~

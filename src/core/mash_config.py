@@ -33,6 +33,7 @@ If not, see <https://www.gnu.org/licenses/>
 # ~ Import System Module. ~ #
 import json
 import os
+from pathlib import Path
 
 
 def create_config(config_file: str):
@@ -59,10 +60,10 @@ def load_config():
         - dict : The configuration information.
     """
 
-    config_file = os.path.expanduser('~') + '/.mash'
+    config_file = Path('~/.mash').expanduser()
 
-    if not os.path.exists(config_file):
-        create_config(config_file)
+    if not config_file.exists():
+        create_config(str(config_file))
 
     with open (config_file, 'r') as cfg_file:
         config = json.loads(cfg_file.read())
