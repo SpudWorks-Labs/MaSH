@@ -101,3 +101,5 @@
 ---
 
 ## TO-DO
+**[!!!!!]** Clean up and make sure the code is ready for
+phase 2.
