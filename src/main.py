@@ -61,7 +61,6 @@ class Mash:
 
         self.welcome_message()
         init_screens()
-        self._is_running = True
 
     def welcome_message(self):
         import time

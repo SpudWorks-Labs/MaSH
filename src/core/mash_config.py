@@ -74,9 +74,8 @@ def load_config():
             if not config["prompt"].endswith(" "):
                 config["prompt"] += " "
 
-            config["style"] = Style.from_dict({
-                "": config["style"]
-            })
+            if not config["style"]:
+                raise KeyError()
 
         except KeyError as ke:
             error_msg = f"Primary Key not found: {ke}"

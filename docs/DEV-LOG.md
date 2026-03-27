@@ -62,7 +62,11 @@
       found wihin `core/` as well as the `.mash` config
       logic.
 
+* 16:45
+    - Modulated the code more with a `core/mash_screens.py`
+      file for displaying the menu screens.
+
 
 ## TO-DO
-[!!!] Create placeholder menus for each command. ~~
+[!!!] Create placeholder menus for each command. ~~ [IN-PROGRESS]
 [.] Look into handling the paths in a more robust way. ~

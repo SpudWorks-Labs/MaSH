@@ -47,6 +47,8 @@ cwd = None
 
 
 def init_screens():
+    global config, cwd
+
     config = load_config()
     cwd = os.getcwd()
 
@@ -55,19 +57,19 @@ def prompt_screen():
     """
     ~ Display the prompt menu. ~
     """
-    print(config)
-    exit(0)
+    
+    global cwd
+    
     style = Style.from_dict({
-                "": config["style"]
-        })
+        "": config["style"]
+    })
 
-    while self._is_running:
-        user_input = prompt(config["prompt"], style=config["style"])
+    while True:
+        user_input = prompt(config["prompt"], style=style)
 
         # ~ Exit the terminal. ~ #
         if user_input.lower() == 'exit':
-            self._is_running = False
-            continue
+            break
 
         # ~ Check the current directoy. ~ #
         elif user_input.lower() == 'cwd':
