@@ -59,16 +59,16 @@
 
 * 15:33
     - Moved the command processing logic into its own file
-      found wihin `core/` as well as the `.mash` config
+      found wihin `src/core/` as well as the `.mash` config
       logic.
 
 * 16:45
-    - Modulated the code more with a `core/mash_screens.py`
+    - Modulated the code more with a `src/core/mash_screens.py`
       file for displaying the menu screens.
 
 * 17:00
     - Moved the welcome message method into
-      `core/mash_screens.py` to keep the main method small.
+      `src/core/mash_screens.py` to keep the main method small.
 
 
 ## TO-DO
