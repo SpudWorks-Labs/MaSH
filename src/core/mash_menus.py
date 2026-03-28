@@ -72,7 +72,7 @@ def welcome_message():
     """
 
     os.system("clear" if os.name != 'nt' else "cls")
-
+    msg = "Welcome to MaSH: The Productive Terminal"
     mash_logo_lines = [            
         r" ______   ______   _____   ________  ___   ___ ",
         r"|      | |      | / __  | /   _____)|   | |   |",
@@ -80,8 +80,8 @@ def welcome_message():
         r"|  |  |   |  |  | ___/  |(______   )|    _    |",
         r"|  |   | |   |  |/ __   | ______)  )|   | |   |",
         r"|___|   V   |___||___/|_|(________/ |___| |___|",
-        "",
-        "<b><style fg='#FF69B4'>Welcome to MaSH: The Productive Terminal</style></b>"
+    "",
+        f"<b><style fg='#FF69B4'>{msg}</style></b>"
     ]
 
     for line in mash_logo_lines:
@@ -91,9 +91,13 @@ def welcome_message():
             print_formatted_text(line)
         time.sleep(0.07)
         
-    print_formatted_text(HTML("<ansiblue>------------------------------------------</ansiblue>"))
+    print_formatted_text(
+        HTML(f"<ansiblue>{'-' * 40}</ansiblue>")
+    )
     time.sleep(0.1)
-    print_formatted_text(HTML("<ansigreen>Type your command or <b>exit</b> to leave MaSH</ansigreen>"), end='\n\n')
+    msg = "Type your command or <b>exit</b> to leave MaSH"
+    print_formatted_text(
+        HTML(f"<ansigreen>{msg}</ansigreen>"), end='\n\n')
     time.sleep(0.2)
 
 
