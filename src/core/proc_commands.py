@@ -117,11 +117,11 @@ def process_spudcommand(command: str):
 
     # ~ The AI menu. ~ #
     if command.lower() == 'ai':
-        ai_menu()
+        menu_template("AI", ["chat", "train"])
     
     # ~ The project management menu. ~ #
     elif command.lower() == 'projects':
-        projects_menu()
+        menu_template("Projects Manager", ["create", "new"])
     
     # ~ Display the help menu. ~ #
     elif command.lower() == 'help':

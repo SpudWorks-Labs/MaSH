@@ -45,41 +45,27 @@ def copy_config(cfg, curr_dir, prompt_style):
     style = prompt_style
 
 
-def ai_menu():
+def menu_template(name, commands):
     while True:
-        print("Welcome to the AI Menu!")
+        print(f"Welcome to the {name} Menu!")
         print("\nHere are the available commands:\n")
-        print("\tchat\t\ttrain\t\texit")
+
+        for command in commands:
+            print(f"\t{command}\t", end='')
+
+        print('\n')
 
         user_input = prompt(config["prompt"], style=style)
 
-        if user_input.lower() in ["chat", "train", "exit"]:
-            if user_input.lower() == 'exit':
-                break
-                
+        if user_input.lower() == 'exit':
+            break
+
+        if user_input.lower() in commands:    
             print("These features are still in the works!")
 
         else:
             print("Sorry, that is not a valid command!")
 
-
-def projects_menu():
-    while True:
-        print("Welcome to the Projects Manager!")
-        print("\nHere are the available commands:\n")
-        print("\topen\t\tnew\t\texit")
-
-        user_input = prompt(config["prompt"], style=style)
-
-        if user_input.lower() in ["chat", "train", "exit"]:
-            if user_input.lower() == 'exit':
-                break
-                
-            print("These features are still in the works!")
-
-        else:
-            print("Sorry, that is not a valid command!")
-    
 
 def help_menu():
     print("\nHere are the available SpudCommands:")
