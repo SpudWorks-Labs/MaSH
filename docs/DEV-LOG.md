@@ -98,6 +98,13 @@
     - Phase 1D has pretty much been finished, the only
       thing left to do is polishing the code.
 
+### 2026/03/28
+* 05:02
+  - Updated to the Nightly build and V1.0.0-2026.03.28
+    and created the menu placeholders.
+  - A refactoring is needed for the codebase, especially
+    for the menu handling.
+
 ---
 
 ## TO-DO

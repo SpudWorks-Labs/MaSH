@@ -2,7 +2,7 @@
 
 ---
 
-## Current Version: 0.6.0-2026/03/27M
+## Current Version: 1.0.0-2026/03/28N
 This version is close to a finished terminal. A few more
 additions need to be made such as placeholder SpudMenus
 but it is a functional terminal.
@@ -15,7 +15,7 @@ like `cd`, `ls`, and more. Even interactive commands such
 as `nano`.
 
 - **SpudCommands:** Currently in the placeholder stage, but the
-capabilities of these tools have been created.
+menu capabilities of these tools have been created.
 
 ---
 

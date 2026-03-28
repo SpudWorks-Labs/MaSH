@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                   File: main.py
                  Date: 2026/03/24
-            Version: 0.6.0-2026.03.27
+            Version: 1.0.0-2026.03.28
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -48,16 +48,11 @@ class Mash:
     Functions:
         __init__ : Initilaize the terminal program.
         execute  : Execute the main terminal loop.
-        welcome_message : Display the welcome message.
     """
 
     def __init__(self):
         """
         ~ Initialize the terminal program. ~
-
-        Attributes:
-            prompt : The prompt to display.
-            _is_running : The state of the terminal.
         """
 
         welcome_message()
@@ -68,7 +63,6 @@ class Mash:
         ~ Execute the main program loop. ~
         """
 
-        # ~ Main program loop. ~ #
         prompt_menu()
 
 
