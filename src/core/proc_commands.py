@@ -120,12 +120,13 @@ def process_spudcommand(command: str):
         menu_template("AI", ["chat", "train"])
     
     # ~ The project management menu. ~ #
-    elif command.lower() == 'projects':
-        menu_template("Projects Manager", ["create", "new"])
+    elif command.lower() == 'project':
+        menu_template("Project Manager", ["create", "new"])
     
     # ~ Display the help menu. ~ #
     elif command.lower() == 'help':
         help_menu()
 
     else:
-        print(f"Error: The SpudCommand '{command}' does not exist!")
+        error_msg = f"'{command}' does not exist!"
+        print(f"Error: {error_msg}")
