@@ -107,6 +107,10 @@
   - A refactoring is needed for the codebase, especially
     for the menu handling.
 
+* 05:26
+  - Created a menu template method for SpudCommands.
+  
+
 ---
 
 ## TO-DO
