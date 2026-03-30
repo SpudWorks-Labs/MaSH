@@ -52,7 +52,6 @@ def create_config(config_file: str):
         json.dump(stock_info, cfg_file, indent=4)
         cfg_file.write('\n')
 
-
 def load_config():
     """
     ~ Load the config file create it if non-existant. ~
