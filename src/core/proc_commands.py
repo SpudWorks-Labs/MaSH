@@ -117,15 +117,28 @@ def process_spudcommand(command: str):
 
     # ~ The AI menu. ~ #
     if command.lower() == 'ai':
-        menu_template("AI", ["chat", "train"])
+        options = [
+            "chat", "train"
+        ]
+        menu_template("AI", options)
     
     # ~ The project management menu. ~ #
-    elif command.lower() == 'project':
-        menu_template("Project Manager", ["create", "new"])
+    elif command.lower() == 'projects':
+        options = [
+            "create", "new"
+        ]
+        menu_template("Project Manager", options)
     
     # ~ Display the help menu. ~ #
     elif command.lower() == 'help':
         help_menu()
+
+    # ~ Display the settings menu. ~ #
+    elif command.lower() == 'settings':
+        command = [
+            "auth"
+        ]
+        menu_template("Settings", options)
 
     else:
         error_msg = f"'{command}' does not exist!"

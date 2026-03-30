@@ -110,6 +110,13 @@
 * 05:26
   - Created a menu template method for SpudCommands.
   
+---
+
+### 2026/03/30
+* 18:00
+  - Added a settings SpudCommand to the `proc_commands.py`
+    file.
+  - Next need to make it class-based.
 
 ---
 
@@ -117,6 +124,5 @@
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
 **[!!!]** Make `mash_menus.py` class-based.
-**[!!!]** Make `proc_commands.py` class-based and add
-settings option.
+**[!!!]** Make `proc_commands.py` class-based.
 **[!!!]** Make `plugin_menus.py` class-based as well.
