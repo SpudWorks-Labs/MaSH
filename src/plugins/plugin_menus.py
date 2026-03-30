@@ -39,6 +39,10 @@ style = None
 
 
 def copy_config(cfg, curr_dir, prompt_style):
+    """
+    ~ Copy the configuration information. ~
+    """
+
     global config, cwd, style
     config = cfg
     cwd = curr_dir
@@ -46,6 +50,10 @@ def copy_config(cfg, curr_dir, prompt_style):
 
 
 def menu_template(name, commands):
+    """
+    ~ The template method for menus. ~
+    """
+
     while True:
         print(f"Welcome to the {name} Menu!")
         print("\nHere are the available commands:\n")
@@ -68,6 +76,10 @@ def menu_template(name, commands):
 
 
 def help_menu():
+    """
+    ~ The help menu. ~
+    """
+    
     print("\nHere are the available SpudCommands:")
     print("\n\t@>ai : AI Assistant settings menu.")
     print("\t@>projects : Project manager menu.")

@@ -116,3 +116,7 @@
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
+**[!!!]** Make `mash_menus.py` class-based.
+**[!!!]** Make `proc_commands.py` class-based and add
+settings option.
+**[!!!]** Make `plugin_menus.py` class-based as well.

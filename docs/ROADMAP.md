@@ -40,7 +40,7 @@ The full terminal experience. Create a "Welcome Header"
 that displays when MaSH starts. Has menus for the config
 settings and the tools.
 
-### 1.E: The Polishing
+### 1.E: The Polishing (IN-PROGRESS)
 Clean up this phase and ensure the code is clean and functional.
 
 ---
