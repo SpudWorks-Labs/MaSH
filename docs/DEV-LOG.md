@@ -127,6 +127,9 @@
   - Need to finish the look and ensure scrolling the
     projects is possible.
 
+* 17:57
+  - Made more progress in the menu screen tests.
+
 ---
 
 ## TO-DO
