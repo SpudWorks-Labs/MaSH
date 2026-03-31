@@ -120,6 +120,15 @@
 
 ---
 
+### 2026/03/31
+* 07:00
+  - Finished the first little tests of the updated
+    menus.
+  - Need to finish the look and ensure scrolling the
+    projects is possible.
+
+---
+
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
