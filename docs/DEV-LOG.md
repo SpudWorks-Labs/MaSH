@@ -138,6 +138,10 @@
   - I just need to make the projects allow for a scrolling
     window kind of feature.
 
+* 21:40
+  - The prototyped new menus have been finished.
+  - I need to create updated wmenus for the other screens.
+
 ---
 
 ## TO-DO

@@ -11,9 +11,13 @@ from prompt_toolkit.buffer import Buffer
 
 # Assuming this exists globally or is passed in
 PROJECTS = [
-    {"name": "MaSH", "path": "/home/bruhtato/mash"},
-    {"name": "SpudNet", "path": "/home/bruhtato/spudnet"},
-    {"name": "SpudScout", "path": "/home/bruhtato/spudscout"}
+    {"title": "MaSH", "body": "/home/bruhtato/mash"},
+    {"title": "SpudNet", "body": "/home/bruhtato/spudnet"},
+    {"title": "SpudScout", "body": "/home/bruhtato/spudscout"}
+]
+MODELS = [
+    {"title": "SpudNet", "body": "A simple smart model"},
+    {"title": "SpudBrain", "body": "A high-end thinking model."}
 ]
 
 class CommandWindow(Frame):
@@ -54,10 +58,12 @@ class CommandWindow(Frame):
             align=WindowAlign.CENTER
         )
 
-class ProjectWindow(Frame):
-    def __init__(self):
-        self.window_title = "Projects"
+class ListWindow(Frame):
+    def __init__(self, title, item_list):
+        self.window_title = title
         self.selected_index = 0
+        self.top_index = 0
+        self.item_list = item_list
         # 1. We initialize the Frame with a DynamicContainer as its body.
         # This makes the Frame itself the "Main_Window" object.
         super().__init__(
@@ -66,30 +72,54 @@ class ProjectWindow(Frame):
         )
 
     def get_dynamic_content(self):
-        # 2. Build the list of frames for each project
-        frames = []
-        for i, proj in enumerate(PROJECTS):
-            name = proj['name']
-            path = proj['path']
-
-            if i == self.selected_index:
-                name = "> " + name
-
-            frames.append(
-                Frame(
-                    title=name,
-                    body=Window(height=1, content=FormattedTextControl(path))
-                )
-            )
+        _, term_height = shutil.get_terminal_size()
         
-        # 3. CRITICAL: You must return the HSplit so DynamicContainer can show it.
-        final_frames = HSplit(frames)
+        # 1. Intent: Use roughly 2/3 of the screen (as per your current math)
+        # But we set a MINIMUM height to prevent the crash
+        parent_target_height = max(5, term_height - (term_height // 3))
+        inner_space = parent_target_height - 2
 
-        return ScrollablePane(
-            content=final_frames,
-            height=6,
-            show_scrollbar=True
-        )
+        # 2. Safety Check: How many 3-line frames can actually fit?
+        # If the answer is 0, we shouldn't try to render frames.
+        visible_count = inner_space // 3
+
+        if self.selected_index < self.top_index:
+            self.top_index = self.selected_index
+        elif self.selected_index >= self.top_index + visible_count:
+            self.top_index = self.selected_index - visible_count + 1
+
+        frames = []
+        
+        # 3. Only attempt to render if visible_count > 0
+        if visible_count > 0:
+            visible_items = self.item_list[self.top_index : self.top_index + visible_count]
+            for i, item in enumerate(visible_items):
+                actual_index = self.top_index + i
+                title = ("> " + item['title']) if actual_index == self.selected_index else item['title']
+                
+                frames.append(
+                    Frame(
+                        title=title,
+                        body=Window(height=1, content=FormattedTextControl(item['body']))
+                    )
+                )
+        
+        # 4. Always add the spacer to soak up extra room
+        frames.append(Window())
+
+        if not visible_items and visible_count > 0:
+            return Window(content=FormattedTextControl(" No projects found."))
+        elif visible_count <= 0:
+            return Window(content=FormattedTextControl(" Terminal too small!"))
+
+        # 5. Use Dimension for the height. This is more flexible than a raw int.
+        return HSplit(frames, height=Dimension(preferred=parent_target_height, min=3))
+        
+        # return ScrollablePane(
+        #     content=final_frames,
+        #     height=6,
+        #     show_scrollbar=True
+        # )
 
 class PromptWindow(VSplit):
     def __init__(self, commands):
@@ -118,15 +148,16 @@ class PromptWindow(VSplit):
             get_app().exit()
             return False
 
-
         return False
 
 
 class Menu:
-    def __init__(self, title, commands):
+    def __init__(self, id, title, commands, content=None):
+        self.id = id
         self.title = title
         self.command_list = commands
-        self.projects = ProjectWindow()
+        self.content = content
+        self.projects = ListWindow(self.content["name"], self.content['data'])
         self.commands = CommandWindow(self.command_list)
         self.prompt = PromptWindow(self.command_list)
 
@@ -140,32 +171,58 @@ class Menu:
                 self.prompt
             ])
         )
+
         return root_container
 
-menu = Menu("Project Manager", ["create", "remove"])
-kb = KeyBindings()
-kb.add('tab')(focus_next)
-@kb.add('up')
-def _(event):
-    if menu.projects.selected_index == 0:
-        menu.projects.selected_index = len(PROJECTS)
-    else:
-        menu.projects.selected_index -= 1
 
-@kb.add('down')
-def _(event):
-    if menu.projects.selected_index == len(PROJECTS):
-        menu.projects.selected_index = 0
-    else:
-        menu.projects.selected_index += 1
+class Test:
+    def __init__(self):
+        self.projects = Menu("pm", "Project Manager", ["create", "remove"], {"name": "Projects", "data": PROJECTS})
+        self.ai = Menu("ai", "AI Assistants", ["chat", "train"], {"name": "Models", "data": MODELS})
 
-@kb.add('c-c')
-def _(event):
-    event.app.exit()
+        self.curr_menu = self.projects
+        self.kb = KeyBindings()
+        self.setup_keybindings()
+
+    def setup_keybindings(self):
+        self.kb.add('tab')(focus_next)
+        @self.kb.add('up')
+        def _(event):
+            if self.curr_menu.projects.selected_index == 0:
+                self.curr_menu.projects.selected_index = len(self.curr_menu.content['data']) - 1
+            else:
+                self.curr_menu.projects.selected_index -= 1
+
+        @self.kb.add('down')
+        def _(event):
+            if self.curr_menu.projects.selected_index == len(self.curr_menu.content['data']) - 1:
+                self.curr_menu.projects.selected_index = 0
+            else:
+                self.curr_menu.projects.selected_index += 1
+
+        @self.kb.add('right')
+        @self.kb.add('left')
+        def _(event):
+            if self.curr_menu.id == 'pm':
+                self.curr_menu = self.ai
+            elif self.curr_menu.id == 'ai':
+                self.curr_menu = self.projects
+
+            event.app.layout.focus(self.curr_menu.prompt.buffer)
+
+        @self.kb.add('c-c')
+        def _(event):
+            event.app.exit()
+
+    def get_layout_container(self):
+        return self.curr_menu.display()
+
+    def execute(self):
+        container = DynamicContainer(self.get_layout_container)
+        layout = Layout(container=container, focused_element=self.curr_menu.prompt.buffer)
+        app = Application(layout=layout, key_bindings=self.kb, full_screen=True)
+        app.run()
 
 
-container = menu.display()
-layout = Layout(container=container, focused_element=menu.prompt.buffer)
-# Create and run application.
-application = Application(layout=layout, key_bindings=kb, full_screen=True)
-application.run()
+test = Test()
+test.execute()
