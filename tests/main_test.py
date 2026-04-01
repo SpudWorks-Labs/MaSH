@@ -3,11 +3,12 @@ import shutil
 
 from prompt_toolkit.application import Application
 from prompt_toolkit.application.current import get_app
+from prompt_toolkit.buffer import Buffer
 from prompt_toolkit.key_binding import KeyBindings
 from prompt_toolkit.key_binding.bindings.focus import focus_next, focus_previous
 from prompt_toolkit.layout.containers import Window, DynamicContainer
-from prompt_toolkit.layout import Dimension, HSplit, Layout, ScrollablePane
-from prompt_toolkit.layout.controls import FormattedTextControl
+from prompt_toolkit.layout import Dimension, HSplit, VSplit, Layout, ScrollablePane
+from prompt_toolkit.layout.controls import FormattedTextControl, BufferControl
 from prompt_toolkit.widgets import Frame, TextArea
 
 
@@ -27,9 +28,9 @@ class Test:
         self.setup_keybindings()
 
     def setup_keybindings(self):
+        self.kb.add('tab')(focus_next)
         @self.kb.add('up')
         def _(event):
-            focus_next
             if self.selected_index == 0:
                 self.selected_index = len(PROJECTS)
             else:
@@ -37,7 +38,6 @@ class Test:
 
         @self.kb.add('down')
         def _(event):
-            focus_previous
             if self.selected_index == len(PROJECTS):
                 self.selected_index = 0
             else:
@@ -111,8 +111,13 @@ class Test:
 
         return commands, rows
 
+    def handle_command(self, buff):
+        cmd = buff.text
+        return True
+
     def display(self):
         commands, rows = self.get_commands()
+        prompt_buffer = Buffer(accept_handler=self.handle_command)
         root_container = Frame(
             title="Project Manager",
             body=HSplit([
@@ -123,7 +128,16 @@ class Test:
                         height=rows,
                         content=FormattedTextControl(commands)
                     )
-                )
+                ),
+                VSplit([
+                    Window(
+                        width=6,
+                        content=FormattedTextControl(" >>> ")
+                    ),
+                    Window(
+                        content=BufferControl(buffer=prompt_buffer)
+                    )
+                ])
             ])
         )
 
@@ -134,6 +148,50 @@ class Test:
         application.run()
 
 
+class Main_Window(Frame):
+    def __init__(self, title):
+        self.title = title
+        self.container = None
+        
+    def get_projects(self):
+        for i, proj in enumerate(PROJECTS):
+            name = proj['name']
+            path = proj['path']
+
+            if i == self.selected_index:
+                name = "> " + name
+
+            yield name, path
+
+    def get_dynamic_content(self):
+        projects_list = HSplit([
+            Frame(
+                title=proj_name,
+                body=Window(FormattedTextControl(proj_path))
+            ) for proj_name, proj_path in self.get_projects()
+        ])
+
+    def display(self):
+        self.container = Frame(
+            title=self.title,
+            body=DynamicContainer(self.get_dynamic_content)
+        )
+
+class Menu:
+    def __init__(self, title):
+        self.title = title
+
+    def display(self):
+        root_container = Frame(
+            title=self.title,
+            body=HSplit([
+                Main_Window("Projects"),
+                # Command_Window(),
+                # Prompt_Window()
+            ])
+        )
+
+
 if __name__ == '__main__':
-    test = Test()
+    test = Menu("Projects Manger")
     test.display()

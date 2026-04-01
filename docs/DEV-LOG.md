@@ -132,6 +132,14 @@
 
 ---
 
+### 2026/04/01
+* 06:50
+  - I have almost finished the projects menu.
+  - I just need to make the projects allow for a scrolling
+    window kind of feature.
+
+---
+
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
