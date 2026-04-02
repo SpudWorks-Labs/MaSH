@@ -144,6 +144,13 @@
 
 ---
 
+### 2026/04/02
+* 18:56
+  - Finished the menu tests, and ready to start the
+    official implementation.
+
+---
+
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
