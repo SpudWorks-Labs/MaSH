@@ -38,7 +38,7 @@ from pathlib import Path
 
 # ~ Import Local Modules. ~ #
 from plugins.plugin_menus import (
-    ai_menu, projects_menu, help_menu
+    AssistantMenu, ProjectMenu
 )
 
 
@@ -117,28 +117,18 @@ def process_spudcommand(command: str):
 
     # ~ The AI menu. ~ #
     if command.lower() == 'ai':
-        options = [
-            "chat", "train"
-        ]
-        menu_template("AI", options)
-    
+        AssistantMenu().render()
+
     # ~ The project management menu. ~ #
-    elif command.lower() == 'projects':
-        options = [
-            "create", "new"
-        ]
-        menu_template("Project Manager", options)
+    elif command.lower() == 'pm':
+        ProjectMenu().render()
     
     # ~ Display the help menu. ~ #
-    elif command.lower() == 'help':
-        help_menu()
-
-    # ~ Display the settings menu. ~ #
-    elif command.lower() == 'settings':
-        command = [
-            "auth"
-        ]
-        menu_template("Settings", options)
+    elif command.lower() == '??':
+        print("\nHere are the available SpudCommands:\n")
+        print("\t@>ai : AI Assistant settings menu.")
+        print("\t@>pm : Project manager menu.")
+        print("\t@>?? : Display this message\n\n")
 
     else:
         error_msg = f"'{command}' does not exist!"

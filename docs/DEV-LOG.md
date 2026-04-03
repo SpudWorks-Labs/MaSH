@@ -151,9 +151,22 @@
 
 ---
 
+### 2026/04/03
+* 16:58
+  - Decided to finally listen to Gemini and stop focusing
+    on the UI and implementing features.
+
+* 18:21
+  - The menus are now class based and more structured.
+  - Next I need to make the a template for the existing
+    menus for common attributes and methods.
+
+---
+
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
+**[!!!!!]** Reintroduce the prompt styling.
 **[!!!]** Make `mash_menus.py` class-based.
 **[!!!]** Make `proc_commands.py` class-based.
-**[!!!]** Make `plugin_menus.py` class-based as well.
+**[!!]** Have a Menu Template Class for `plugin_menus.py`.

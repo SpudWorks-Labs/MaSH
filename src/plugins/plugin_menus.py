@@ -28,7 +28,7 @@ Public License along with this program.
 If not, see <https://www.gnu.org/licenses/>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
-
+import os
 
 from prompt_toolkit import prompt
 
@@ -49,38 +49,107 @@ def copy_config(cfg, curr_dir, prompt_style):
     style = prompt_style
 
 
-def menu_template(name, commands):
-    """
-    ~ The template method for menus. ~
-    """
-
-    while True:
-        print(f"Welcome to the {name} Menu!")
-        print("\nHere are the available commands:\n")
-
-        for command in commands:
-            print(f"\t{command}\t", end='')
-
-        print('\n')
-
-        user_input = prompt(config["prompt"], style=style)
-
-        if user_input.lower() == 'exit':
-            break
-
-        if user_input.lower() in commands:    
-            print("These features are still in the works!")
-
-        else:
-            print("Sorry, that is not a valid command!")
+def clear():
+    os.system('clear' if os.name != 'nt' else 'cls')
 
 
-def help_menu():
-    """
-    ~ The help menu. ~
-    """
-    
-    print("\nHere are the available SpudCommands:")
-    print("\n\t@>ai : AI Assistant settings menu.")
-    print("\t@>projects : Project manager menu.")
-    print("\t@>help : Display this message\n\n")
+class ProjectMenu:
+    def __init__(self):
+        self.commands = {
+            'import': self.import_project,
+            'remove': self.remove_project,
+            'exit': self.exit_menu
+        }
+        self.projects = {}
+        self._rendering = True
+
+    def import_project(self):
+        print("work in progress...")
+
+    def remove_project(self):
+        print("work in progress...")
+
+    def exit_menu(self):
+        self._rendering = False
+
+    def render(self):
+        while self._rendering:
+            clear()
+            # ~ Display the existing projects. ~ #
+            if self.projects:
+                print("Here are the available projects:\n")
+
+                for project in self.projects:
+                    print(f"~~~ {project['name']} ~~~")
+                    print(f"{project['path']}\n\n")
+
+            else:
+                print("There are no projects here!")
+                print("\nType `import` to add an existing one.\n")
+
+            # ~ Display the available commands. ~ #
+            command_list = list(self.commands.keys())
+            for i, command in enumerate(command_list, 1):
+                print(f"\t{command}", end='')
+
+                if i % 3 == 0:
+                    print("\n")
+
+            # ~ Get the users input. ~ #
+            user_input = input(" >>> ")
+            
+            if user_input.lower() in command_list:
+                self.commands[user_input.lower()]()
+
+        clear()
+
+
+class AssistantMenu:
+    def __init__(self):
+        self.commands = {
+            'chat': self.chat,
+            'create': self.create,
+            'exit': self.exit_menu
+        }
+        self.models = {}
+        self._rendering = True
+
+    def chat(self):
+        print("work in progress...")
+
+    def create(self):
+        print("work in progress...")
+
+    def exit_menu(self):
+        self._rendering = False
+
+    def render(self):
+        while self._rendering:
+            clear()
+            # ~ Display the existing projects. ~ #
+            if self.models:
+                print("Here are the available assistant models:\n")
+
+                for model in self.models:
+                    print(f"~~~ {model['name']} ~~~")
+                    print(f"{model['desc']}\n\n")
+
+            else:
+                print("There are no models here!")
+                print("\nType `create` to create one.\n")
+
+            # ~ Display the available commands. ~ #
+            command_list = list(self.commands.keys())
+            for i, command in enumerate(command_list, 1):
+                print(f"\t{command}", end='')
+
+                if i % 3 == 0:
+                    print("\n")
+
+            # ~ Get the users input. ~ #
+            user_input = input(" >>> ")
+            
+            if user_input.lower() in command_list:
+                self.commands[user_input.lower()]()
+
+        clear()
