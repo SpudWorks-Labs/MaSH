@@ -102,71 +102,76 @@
 
 ### 2026/03/28
 * 05:02
-  - Updated to the Nightly build and V1.0.0-2026.03.28
-    and created the menu placeholders.
-  - A refactoring is needed for the codebase, especially
-    for the menu handling.
+    - Updated to the Nightly build and V1.0.0-2026.03.28
+      and created the menu placeholders.
+    - A refactoring is needed for the codebase, especially
+      for the menu handling.
 
 * 05:26
-  - Created a menu template method for SpudCommands.
+    - Created a menu template method for SpudCommands.
   
 ---
 
 ### 2026/03/30
 * 18:00
-  - Added a settings SpudCommand to the `proc_commands.py`
-    file.
-  - Next need to make it class-based.
+    - Added a settings SpudCommand to the `proc_commands.py`
+      file.
+    - Next need to make it class-based.
 
 ---
 
 ### 2026/03/31
 * 07:00
-  - Finished the first little tests of the updated
-    menus.
-  - Need to finish the look and ensure scrolling the
-    projects is possible.
+    - Finished the first little tests of the updated
+      menus.
+    - Need to finish the look and ensure scrolling the
+      projects is possible.
 
 * 17:57
-  - Made more progress in the menu screen tests.
+    - Made more progress in the menu screen tests.
 
 ---
 
 ### 2026/04/01
 * 06:50
-  - I have almost finished the projects menu.
-  - I just need to make the projects allow for a scrolling
-    window kind of feature.
+    - I have almost finished the projects menu.
+   - I just need to make the projects allow for a scrolling
+      window kind of feature.
 
 * 21:40
-  - The prototyped new menus have been finished.
-  - I need to create updated wmenus for the other screens.
+    - The prototyped new menus have been finished.
+    - I need to create updated wmenus for the other screens.
 
 ---
 
 ### 2026/04/02
 * 18:56
-  - Finished the menu tests, and ready to start the
-    official implementation.
+    - Finished the menu tests, and ready to start the
+      official implementation.
 
 ---
 
 ### 2026/04/03
 * 16:58
-  - Decided to finally listen to Gemini and stop focusing
-    on the UI and implementing features.
+    - Decided to finally listen to Gemini and stop focusing
+      on the UI and implementing features.
 
 * 18:21
-  - The menus are now class based and more structured.
-  - Next I need to make the a template for the existing
-    menus for common attributes and methods.
+    - The menus are now class based and more structured.
+    - Next I need to make the a template for the existing
+      menus for common attributes and methods.
 
 * 20:04
-  - Renamed the file to `mash_menu.py` and made it
-    class-based.
-  - Made `proc_commands.py` also class-based.
-  - I need to clean up the code and remove unnecessary
-    code and add documentation comments.
+    - Renamed the file to `mash_menu.py` and made it
+      class-based.
+    - Made `proc_commands.py` also class-based.
+    - I need to clean up the code and remove unnecessary
+      code and add documentation comments.
+
+* 20:20
+  - Updated the codebase to version 1.3.0-2026.03.04
+    Matutinal build.
+
 ---
 
 ## TO-DO

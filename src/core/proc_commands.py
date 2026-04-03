@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: proc_commands.py
                  Date: 2026/03/24
-            Version: 1.0.0-2026.03.28
+            Version: 1.3.0-2026.04.03
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.

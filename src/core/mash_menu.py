@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: mash_screens.py
                  Date: 2026/03/24
-            Version: 1.0.0-2026.03.28
+            Version: 1.3.0-2026.04.03
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -121,7 +121,7 @@ class Terminal:
 
             # ~ Check the current directoy. ~ #
             elif user_input.lower() == 'cwd':
-                print(cwd)
+                print(self.cwd)
                 continue
 
             # ~ Process the command. ~ #
