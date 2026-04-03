@@ -42,9 +42,8 @@ from prompt_toolkit.layout.containers import DynamicContainer
 from prompt_toolkit.layout.layout import Layout
 
 # ~ Import Local Modules. ~ #
-from core.mash_menus import (
-    prompt_menu, welcome_message, init_menus
-)
+from core.mash_menu import Terminal
+
 
 
 class Mash:
@@ -61,15 +60,15 @@ class Mash:
         ~ Initialize the terminal program. ~
         """
 
-        welcome_message()
-        init_menus()
+        self.terminal = Terminal()
+        self.terminal.welcome_message()
 
     def execute(self):
         """
         ~ Execute the main program loop. ~
         """
 
-        prompt_menu()
+        self.terminal.prompt_menu()
 
 
 if __name__ == '__main__':

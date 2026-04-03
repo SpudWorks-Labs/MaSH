@@ -42,94 +42,112 @@ from plugins.plugin_menus import (
 )
 
 
-def process_command(user_input: str):
-    """
-    ~ Process and execute the users command. ~ #
+class CommandProcessor:
+    def __init__(self):
+        self.assistant_menu = AssistantMenu()
+        self.project_menu = ProjectMenu()
+        self.spud_commands = {
+            'ai': self.assistant_menu.render,
+            'pm': self.project_menu.render,
+            '??': self.spud_help
+        }
 
-    Arguments:
-        - user_input (str) : The command received.
-    """
+    def spud_help(self):
+        print("Here are all of the available commnads:\n")
+        print("@>ai : Create and manage AI Assistant Models.")
+        print("@>pm : Create an manage Projects.")
+        print("@>?? : Display this message.")
 
-    # ~ A SpudCommand was issued. ~ #
-    if user_input.startswith('@>'):
-        command = user_input.replace("@>", "")
+    def process_spudcommand(self, command: str):
+        """
+        ~ Process the SpudCommand and display the menu. ~
 
-        process_spudcommand(command)
+        Arguments:
+            - command (str) : The command to execute.
+        """
 
-    # ~ System command was issued. ~ #
-    else:
-        return process_syscommand(user_input)
+        # ~ The AI menu. ~ #
+        if command in list(self.spud_commands.keys()):
+            self.spud_commands[command]()
+        # if command.lower() == 'ai':
+        #     AssistantMenu().render()
 
-def process_syscommand(command: str):
-    """
-    ~ Try to process the system command from user. ~
+        # # ~ The project management menu. ~ #
+        # elif command.lower() == 'pm':
+        #     ProjectMenu().render()
+        
+        # # ~ Display the help menu. ~ #
+        # elif command.lower() == '??':
+        #     print("\nHere are the available SpudCommands:\n")
+        #     print("\t@>ai : AI Assistant settings menu.")
+        #     print("\t@>pm : Project manager menu.")
+        #     print("\t@>?? : Display this message\n\n")
 
-    Arguments:
-        - command (str) : System command to execute.
-    """
+        # else:
+        #     error_msg = f"'{command}' does not exist!"
+        #     print(f"Error: {error_msg}")
 
-    # ~ Handle Change Directory command seperately. ~ #
-    try:
-        parts = shlex.split(command)
-    except ValueError:
-        parts = command.split()
+    def process_syscommand(self, command: str):
+        """
+        ~ Try to process the system command from user. ~
 
-    if parts and parts[0] == 'cd':
-        return change_directory(parts[1:])
+        Arguments:
+            - command (str) : System command to execute.
+        """
 
-    # ~ Attempt to run the command. ~ #
-    try:
-        subprocess.run(command, shell=True)
-    except Exception as e:
-        print(f"MaSH Error: {e}")
+        # ~ Handle Change Directory command seperately. ~ #
+        try:
+            parts = shlex.split(command)
+        except ValueError:
+            parts = command.split()
 
-def change_directory(path: list):
-    """
-    ~ Change the current working directory to the path ~
+        if parts and parts[0] == 'cd':
+            return self.change_directory(parts[1:])
 
-    Arguments:
-        path (list) : The path the user wants to travel to.
-    """
+        # ~ Attempt to run the command. ~ #
+        try:
+            subprocess.run(command, shell=True)
+        except Exception as e:
+            print(f"MaSH Error: {e}")
 
-    try:
-        # ~ Empty path returns the home directory. ~ #
-        target = Path.home()
+    def change_directory(self, path: list):
+        """
+        ~ Change the current working directory to the path ~
 
-        # ~ Expand the given path. ~ #
-        if path:
-            target = Path(path[0]).expanduser()
+        Arguments:
+            path (list) : The path the user wants to travel to.
+        """
 
-        # ~ Change the directory. ~ #
-        os.chdir(target)
+        try:
+            # ~ Empty path returns the home directory. ~ #
+            target = Path.home()
 
-        return os.getcwd()
+            # ~ Expand the given path. ~ #
+            if path:
+                target = Path(path[0]).expanduser()
 
-    except Exception as e:
-        print(f"MaSH cd Error: {e}")
+            # ~ Change the directory. ~ #
+            os.chdir(target)
 
-def process_spudcommand(command: str):
-    """
-    ~ Process the SpudCommand and display the menu. ~
+            return os.getcwd()
 
-    Arguments:
-        - command (str) : The command to execute.
-    """
+        except Exception as e:
+            print(f"MaSH cd Error: {e}")
 
-    # ~ The AI menu. ~ #
-    if command.lower() == 'ai':
-        AssistantMenu().render()
+    def process_command(self, user_input: str):
+        """
+        ~ Process and execute the users command. ~ #
 
-    # ~ The project management menu. ~ #
-    elif command.lower() == 'pm':
-        ProjectMenu().render()
-    
-    # ~ Display the help menu. ~ #
-    elif command.lower() == '??':
-        print("\nHere are the available SpudCommands:\n")
-        print("\t@>ai : AI Assistant settings menu.")
-        print("\t@>pm : Project manager menu.")
-        print("\t@>?? : Display this message\n\n")
+        Arguments:
+            - user_input (str) : The command received.
+        """
 
-    else:
-        error_msg = f"'{command}' does not exist!"
-        print(f"Error: {error_msg}")
+        # ~ A SpudCommand was issued. ~ #
+        if user_input.startswith('@>'):
+            command = user_input.replace("@>", "")
+
+            self.process_spudcommand(command)
+
+        # ~ System command was issued. ~ #
+        else:
+            return self.process_syscommand(user_input)

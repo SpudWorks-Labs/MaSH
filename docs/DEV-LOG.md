@@ -161,12 +161,17 @@
   - Next I need to make the a template for the existing
     menus for common attributes and methods.
 
+* 20:04
+  - Renamed the file to `mash_menu.py` and made it
+    class-based.
+  - Made `proc_commands.py` also class-based.
+  - I need to clean up the code and remove unnecessary
+    code and add documentation comments.
 ---
 
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
 **[!!!!!]** Reintroduce the prompt styling.
-**[!!!]** Make `mash_menus.py` class-based.
-**[!!!]** Make `proc_commands.py` class-based.
 **[!!]** Have a Menu Template Class for `plugin_menus.py`.
+**[!]** Code clean up.
