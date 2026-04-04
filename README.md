@@ -26,7 +26,7 @@ between projects.
 ## Installation & Quickstart
 ```bash
 # ~ First, clone the repo and enter that directory. ~ #
-git clone https://github.com/SpudWorks-Labs/MaSH
+git clone https://codeberg.org/SpudWorks/MaSH
 cd MaSH
 
 # ~ Next, create a virtual environment. ~ #
