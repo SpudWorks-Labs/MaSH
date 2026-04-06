@@ -32,16 +32,15 @@ If not, see <https://www.gnu.org/licenses/>
 
 import os
 
-from prompt_toolkit import prompt
-
 
 def clear():
     os.system('clear' if os.name != 'nt' else 'cls')
 
 class Menu:
-    def __init__(self, commands, menu):
+    def __init__(self, commands, menu, display_prompt):
         self.commands = commands
         self.menu = menu
+        self.display_prompt = display_prompt
         self.items = self.get_items()
         self._rendering = True
 
@@ -74,15 +73,15 @@ class Menu:
         else:
             print("There are no items here!\n")
 
-    def display_commands(command_list):
+    def display_commands(self, command_list):
         for i, command in enumerate(command_list, 1):
             print(f"\t{command}", end='\t')
 
             if i % 3 == 0:
                 print('\n')
 
-    def get_prompt(self):
-        user_input = input(" >>> ")
+    def get_prompt(self, command_list):
+        user_input = self.display_prompt()
 
         if user_input in command_list:
             self.commands[user_input]()
@@ -114,13 +113,13 @@ class Menu:
 
 
 class ProjectMenu(Menu):
-    def __init__(self):
+    def __init__(self, display_prompt):
         self.commands = {
             'import': self.import_project,
             'remove': self.remove_item,
             'exit': self.exit_menu
         }
-        super().__init__(self.commands, "projects")
+        super().__init__(self.commands, "projects", display_prompt)
 
     def import_project(self):
         name = path = None
@@ -141,16 +140,15 @@ class ProjectMenu(Menu):
 
 
 class AssistantMenu(Menu):
-    def __init__(self):
+    def __init__(self, display_prompt):
         self.commands = {
             'chat': self.chat,
             'create': self.create,
             'remove':self.remove_item,
             'exit': self.exit_menu
         }
-        self.models = self.get_models()
 
-        super().__init__(self.commands, "models")
+        super().__init__(self.commands, "models", display_prompt)
 
     def chat(self):
         print("work in progress...")

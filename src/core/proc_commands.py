@@ -36,16 +36,33 @@ import shlex
 import subprocess
 from pathlib import Path
 
+# ~ Import Third-Party Modules. ~ #
+from prompt_toolkit import prompt
+from prompt_toolkit.styles import Style
+
 # ~ Import Local Modules. ~ #
+from core.mash_config import load_config
 from plugins.plugin_menus import (
     AssistantMenu, ProjectMenu
 )
 
 
+def display_prompt():
+    config = load_config()
+    style = Style.from_dict({
+            '': config['style']
+        })
+
+    return prompt(
+        config['prompt'],
+        style=style
+    )
+
+
 class CommandProcessor:
     def __init__(self):
-        self.assistant_menu = AssistantMenu()
-        self.project_menu = ProjectMenu()
+        self.assistant_menu = AssistantMenu(display_prompt)
+        self.project_menu = ProjectMenu(display_prompt)
         self.spud_commands = {
             'ai': self.assistant_menu.start,
             'pm': self.project_menu.start,

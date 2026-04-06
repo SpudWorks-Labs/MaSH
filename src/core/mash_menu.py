@@ -37,13 +37,10 @@ from math import ceil
 import shutil
     
 # ~ Import Third-Party Modules. ~ #
-from prompt_toolkit import prompt
-from prompt_toolkit.styles import Style
 from prompt_toolkit import print_formatted_text, HTML
 
 # ~ Import Local Modules. ~ #
-from core.proc_commands import CommandProcessor
-from core.mash_config import load_config
+from core.proc_commands import CommandProcessor, display_prompt
 
 
 class Terminal:
@@ -51,12 +48,8 @@ class Terminal:
         """
         ~ Initialize the data used for the screens. ~
         """
-        
-        self.config = load_config()
+
         self.cwd = os.getcwd()
-        self.style = Style.from_dict({
-            "": self.config["style"]
-        })
         self.processor = CommandProcessor()
         self._is_running = True
 
@@ -109,10 +102,7 @@ class Terminal:
         """
         
         while self._is_running:
-            cmd = prompt(
-                self.config["prompt"],
-                style=self.style
-            )
+            cmd = display_prompt()
 
             # ~ Exit the terminal. ~ #
             if cmd.lower() == 'exit':

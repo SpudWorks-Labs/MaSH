@@ -191,10 +191,12 @@
   - I now need to add the custom prompt to the SpudMenus.
   - I also need to add comments and doc-strings.
 
+* 18:23
+  - Implemented the custom prompt for the SpudMenus.
+
 ---
 
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
-**[!!!!!]** Reintroduce the prompt styling to menus.
 **[.]** Add comments and doc-strings.
