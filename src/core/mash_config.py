@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                File: mash_config.py
                  Date: 2026/03/24
-            Version: 1.3.0-2026.04.03
+            Version: 1.5.0-2026.04.06
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -62,12 +62,15 @@ def load_config():
 
     config_file = Path('~/.mash').expanduser()
 
+    # ~ Check if the file exists. ~ #
     if not config_file.exists():
         create_config(str(config_file))
 
+    # ~ Process the config file for terminal settings. ~ #
     with open(config_file, 'r') as cfg_file:
         config = json.loads(cfg_file.read())
         
+        # ~ Ensure that the file has important keys. ~ #
         try:
             if not config["prompt"].endswith(" "):
                 config["prompt"] += " "

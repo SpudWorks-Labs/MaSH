@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: mash_screens.py
                  Date: 2026/03/24
-            Version: 1.3.0-2026.04.03
+            Version: 1.5.0-2026.04.06
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -40,25 +40,45 @@ import shutil
 from prompt_toolkit import print_formatted_text, HTML
 
 # ~ Import Local Modules. ~ #
-from core.proc_commands import CommandProcessor, display_prompt
+from core.proc_commands import (
+    CommandProcessor, display_prompt
+)
+from plugin_menus import clear
 
 
 class Terminal:
+    """
+    ~ Handle the Terminal logic. ~
+
+    Functions:
+        - __init__ : Initialize the terminal data.
+        - welcome_message : Display the welcome message.
+        - prompt_menu : Run the prompt logic.
+    """
+
     def __init__(self):
         """
         ~ Initialize the data used for the screens. ~
+
+        Attributes:
+            - cwd str : The current working directory.
+            - processor CommandProcessor : The class that
+              handles user input as commands.
+            - _running bool : Holds the state of the
+              terminal.
         """
 
         self.cwd = os.getcwd()
         self.processor = CommandProcessor()
-        self._is_running = True
+        self._running = True
 
     def welcome_message(self):
         """
         ~ Display the welcome banner to the user. ~ #
         """
 
-        os.system("clear" if os.name != 'nt' else "cls")
+        clear()
+
         msg = "Welcome to MaSH: The Productive Terminal"
         # Make this obtain from a file or something.
         mash_logo_lines = [            
@@ -72,6 +92,7 @@ class Terminal:
             f"<b><style fg='#FF69B4'>{msg}</style></b>"
         ]
 
+        # ~ Render the Logo. ~ #
         for line in mash_logo_lines:
             if line.startswith('<'):
                 print_formatted_text(HTML(line))
@@ -80,12 +101,15 @@ class Terminal:
 
             time.sleep(0.07)
             
+        # ~ Render the seperator. ~ #
         print_formatted_text(
             HTML(f"<ansiblue>{'-' * 40}</ansiblue>")
         )
         time.sleep(0.1)
 
-        msg = "Type a command or <b>exit</b> to leave MaSH"
+        # ~ Display command message. ~ #
+        cmds_msg = "(`help` and `@>??`) or <b>exit</b>" 
+        msg = f"Type a command {cmd} to leave MaSH"
 
         print_formatted_text(
             HTML(
@@ -101,12 +125,13 @@ class Terminal:
         ~ Display the prompt menu. ~
         """
         
-        while self._is_running:
+        # ~ Prompt loop. ~ #
+        while self._running:
             cmd = display_prompt()
 
             # ~ Exit the terminal. ~ #
             if cmd.lower() == 'exit':
-                self._is_running = False
+                self._running = False
                 continue
 
             # ~ Check the current directoy. ~ #

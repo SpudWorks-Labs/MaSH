@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: proc_commands.py
                  Date: 2026/03/24
-            Version: 1.3.0-2026.04.03
+            Version: 1.5.0-2026.04.06
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -48,6 +48,14 @@ from plugins.plugin_menus import (
 
 
 def display_prompt():
+    """
+    ~ Display the custom prompt in a callable method. ~
+
+    Returns:
+        - prompt function : The prompt_toolkit prompt with 
+          custom prompt and color.
+    """
+
     config = load_config()
     style = Style.from_dict({
             '': config['style']
@@ -60,7 +68,33 @@ def display_prompt():
 
 
 class CommandProcessor:
+    """
+    ~ Class that handles the user input as a command. ~
+
+    Functions:
+        - __init__ : Initialize the processor.
+        - spud_help : Display the SpudCommands.
+        - process_spudcommand : Process a known
+          SpudCommand.
+        - process_syscommand : Process a system command.
+        - change_directory : properly change the directory.
+        - process_command : Process the command as system
+          or SpudCommand
+    """
+
     def __init__(self):
+        """
+        ~ Initialize the processor info. ~
+
+        Attributes:
+            - assistant_menu AssistantMenu : Class that
+              handles the AI Assistant Menu.
+            - project_menu ProjectMenu : Class that handles
+              the Project Management Menu.
+            - spud_commands dict : A dictionary of all of
+              the available commands.
+        """
+
         self.assistant_menu = AssistantMenu(display_prompt)
         self.project_menu = ProjectMenu(display_prompt)
         self.spud_commands = {
@@ -70,6 +104,10 @@ class CommandProcessor:
         }
 
     def spud_help(self):
+        """
+        ~ Dispaly all of the SpudCommands. ~
+        """
+
         print("Here are all of the available commnads:\n")
         print("@>ai : Create and manage AI Models.")
         print("@>pm : Create an manage Projects.")

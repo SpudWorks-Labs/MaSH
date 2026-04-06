@@ -194,9 +194,16 @@
 * 18:23
   - Implemented the custom prompt for the SpudMenus.
 
+* 20:52
+  - Added comments and doc-strings.
+  - Not in the right mind-space, so I left out some type
+    declarations and other things.
+  - A full codebase sweep would be beneficial before moving on.
+
 ---
 
 ## TO-DO
+**[!!!!!!]** Do a codebase sweep for comment and code
+clarity.
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
-**[.]** Add comments and doc-strings.
