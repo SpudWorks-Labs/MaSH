@@ -185,10 +185,16 @@
     included a remove item method.
   - Also, some minor code improvements have been made.
 
+* 17:38 (ay)
+  - Cleaned up `Menu.render()` with new methods to make the
+    code concise and maintainable.
+  - I now need to add the custom prompt to the SpudMenus.
+  - I also need to add comments and doc-strings.
+
 ---
 
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
-**[!!!!!]** Reintroduce the prompt styling.
-**[!!!]** Clean up `Menu.render()`
+**[!!!!!]** Reintroduce the prompt styling to menus.
+**[.]** Add comments and doc-strings.

@@ -62,34 +62,42 @@ class Menu:
         self._rendering = True
         self.render()
     
+    def display_items(self):
+        if self.items:
+            print("Here are the available items:\n")
+
+            for item in self.items:
+                head = f"~~~ {item['head']} ~~~"
+                
+                print(f"{head}\n{item['body']}\n")
+
+        else:
+            print("There are no items here!\n")
+
+    def display_commands(command_list):
+        for i, command in enumerate(command_list, 1):
+            print(f"\t{command}", end='\t')
+
+            if i % 3 == 0:
+                print('\n')
+
+    def get_prompt(self):
+        user_input = input(" >>> ")
+
+        if user_input in command_list:
+            self.commands[user_input]()
+
     def render(self):
         while self._rendering:
             clear()
 
-            if self.items:
-                print("Here are the available items:\n")
-
-                for item in self.items:
-                    head = f"~~~ {item['head']} ~~~"
-                    
-                    print(f"{head}\n{item['body']}\n")
-
-            else:
-                print("There are no items here!\n")
+            self.display_items()
             
             print("\n")
             command_list = list(self.commands.keys())
 
-            for i, command in enumerate(command_list, 1):
-                print(f"\t{command}", end='\t')
-
-                if i % 3 == 0:
-                    print('\n')
-
-            user_input = input(" >>> ")
-
-            if user_input in command_list:
-                self.commands[user_input]()
+            self.display_commands(command_list)
+            self.get_prompt(command_list)
 
         clear()
 
