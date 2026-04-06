@@ -35,15 +35,8 @@ import os
 import subprocess
 import json
 
-from prompt_toolkit.application import get_app, Application
-from prompt_toolkit.key_binding import KeyBindings
-from prompt_toolkit.key_binding.bindings.focus import focus_next, focus_previous
-from prompt_toolkit.layout.containers import DynamicContainer
-from prompt_toolkit.layout.layout import Layout
-
 # ~ Import Local Modules. ~ #
 from core.mash_menu import Terminal
-
 
 
 class Mash:

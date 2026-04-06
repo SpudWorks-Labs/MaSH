@@ -28,40 +28,74 @@ Public License along with this program.
 If not, see <https://www.gnu.org/licenses/>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
+
+
 import os
 
 from prompt_toolkit import prompt
 
 
-config = None
-cwd = None
-style = None
-
-
-def copy_config(cfg, curr_dir, prompt_style):
-    """
-    ~ Copy the configuration information. ~
-    """
-
-    global config, cwd, style
-    config = cfg
-    cwd = curr_dir
-    style = prompt_style
-
-
 def clear():
     os.system('clear' if os.name != 'nt' else 'cls')
 
+class Menu:
+    def __init__(self, commands, items):
+        self.commands = commands
+        self.items = items
+        self._rendering = True
 
-class ProjectMenu:
+    def start(self):
+        self._rendering = True
+        self.render()
+    
+    def render(self):
+        while self._rendering:
+            clear()
+
+            if self.items:
+                print("Here are the available items:\n")
+
+                for item in self.items:
+                    print(f"~~~ {item['head']} ~~~\n{item['body']}\n")
+
+            else:
+                print("There are no items here!\n")
+            
+            print("\n")
+            command_list = list(self.commands.keys())
+
+            for i, command in enumerate(command_list, 1):
+                print(f"\t{command}", end='\t')
+
+                if i % 3 == 0:
+                    print('\n')
+
+            user_input = input(" >>> ")
+
+            if user_input in command_list:
+                self.commands[user_input]()
+
+        clear()
+
+    def exit_menu(self):
+        self._rendering = False
+
+class ProjectMenu(Menu):
     def __init__(self):
         self.commands = {
             'import': self.import_project,
             'remove': self.remove_project,
             'exit': self.exit_menu
         }
-        self.projects = {}
-        self._rendering = True
+        self.projects = self.get_projects()
+
+        super().__init__(self.commands, self.projects)
+
+    def get_projects(self):
+        return [{
+            'head': "MaSH", 
+            'body': "/home/bruhtato/Documents/SpudWorks/MaSH"
+        }]
 
     def import_project(self):
         print("work in progress...")
@@ -69,87 +103,26 @@ class ProjectMenu:
     def remove_project(self):
         print("work in progress...")
 
-    def exit_menu(self):
-        self._rendering = False
 
-    def render(self):
-        while self._rendering:
-            clear()
-            # ~ Display the existing projects. ~ #
-            if self.projects:
-                print("Here are the available projects:\n")
-
-                for project in self.projects:
-                    print(f"~~~ {project['name']} ~~~")
-                    print(f"{project['path']}\n\n")
-
-            else:
-                print("There are no projects here!")
-                print("\nType `import` to add an existing one.\n")
-
-            # ~ Display the available commands. ~ #
-            command_list = list(self.commands.keys())
-            for i, command in enumerate(command_list, 1):
-                print(f"\t{command}", end='')
-
-                if i % 3 == 0:
-                    print("\n")
-
-            # ~ Get the users input. ~ #
-            user_input = input(" >>> ")
-            
-            if user_input.lower() in command_list:
-                self.commands[user_input.lower()]()
-
-        clear()
-
-
-class AssistantMenu:
+class AssistantMenu(Menu):
     def __init__(self):
         self.commands = {
             'chat': self.chat,
             'create': self.create,
             'exit': self.exit_menu
         }
-        self.models = {}
-        self._rendering = True
+        self.models = self.get_models()
+
+        super().__init__(self.commands, self.models)
+    
+    def get_models(self):
+        return [{
+            'head': "SpudNet",
+            'body': "A helpful assistant."
+        }]
 
     def chat(self):
         print("work in progress...")
 
     def create(self):
         print("work in progress...")
-
-    def exit_menu(self):
-        self._rendering = False
-
-    def render(self):
-        while self._rendering:
-            clear()
-            # ~ Display the existing projects. ~ #
-            if self.models:
-                print("Here are the available assistant models:\n")
-
-                for model in self.models:
-                    print(f"~~~ {model['name']} ~~~")
-                    print(f"{model['desc']}\n\n")
-
-            else:
-                print("There are no models here!")
-                print("\nType `create` to create one.\n")
-
-            # ~ Display the available commands. ~ #
-            command_list = list(self.commands.keys())
-            for i, command in enumerate(command_list, 1):
-                print(f"\t{command}", end='')
-
-                if i % 3 == 0:
-                    print("\n")
-
-            # ~ Get the users input. ~ #
-            user_input = input(" >>> ")
-            
-            if user_input.lower() in command_list:
-                self.commands[user_input.lower()]()
-
-        clear()

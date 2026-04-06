@@ -47,8 +47,8 @@ class CommandProcessor:
         self.assistant_menu = AssistantMenu()
         self.project_menu = ProjectMenu()
         self.spud_commands = {
-            'ai': self.assistant_menu.render,
-            'pm': self.project_menu.render,
+            'ai': self.assistant_menu.start,
+            'pm': self.project_menu.start,
             '??': self.spud_help
         }
 
@@ -69,23 +69,6 @@ class CommandProcessor:
         # ~ The AI menu. ~ #
         if command in list(self.spud_commands.keys()):
             self.spud_commands[command]()
-        # if command.lower() == 'ai':
-        #     AssistantMenu().render()
-
-        # # ~ The project management menu. ~ #
-        # elif command.lower() == 'pm':
-        #     ProjectMenu().render()
-        
-        # # ~ Display the help menu. ~ #
-        # elif command.lower() == '??':
-        #     print("\nHere are the available SpudCommands:\n")
-        #     print("\t@>ai : AI Assistant settings menu.")
-        #     print("\t@>pm : Project manager menu.")
-        #     print("\t@>?? : Display this message\n\n")
-
-        # else:
-        #     error_msg = f"'{command}' does not exist!"
-        #     print(f"Error: {error_msg}")
 
     def process_syscommand(self, command: str):
         """

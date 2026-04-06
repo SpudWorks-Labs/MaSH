@@ -174,9 +174,16 @@
 
 ---
 
+### 2026/04/06
+* 16:19
+  - Created a Menu Template Class for `plugin_menus.py`
+    and did some code clean up.
+  - Need to make `Menu.render()` cleaner.
+
+---
+
 ## TO-DO
 **[!!!!!]** Clean up and make sure the code is ready for
 phase 2.
 **[!!!!!]** Reintroduce the prompt styling.
-**[!!]** Have a Menu Template Class for `plugin_menus.py`.
-**[!]** Code clean up.
+**[!!!]** Clean up `Menu.render()`

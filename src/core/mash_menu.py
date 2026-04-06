@@ -40,16 +40,10 @@ import shutil
 from prompt_toolkit import prompt
 from prompt_toolkit.styles import Style
 from prompt_toolkit import print_formatted_text, HTML
-from prompt_toolkit.buffer import Buffer
-from prompt_toolkit.layout import Dimension
-from prompt_toolkit.layout.controls import FormattedTextControl, BufferControl
-from prompt_toolkit.layout.containers import DynamicContainer, HSplit, VSplit, Window
-from prompt_toolkit.widgets import Frame
 
 # ~ Import Local Modules. ~ #
 from core.proc_commands import CommandProcessor
 from core.mash_config import load_config
-from plugins.plugin_menus import copy_config
 
 
 class Terminal:
@@ -65,8 +59,6 @@ class Terminal:
         })
         self.processor = CommandProcessor()
         self._is_running = True
-
-        copy_config(self.config, self.cwd, self.style) #temp
 
     def welcome_message(self):
         """
