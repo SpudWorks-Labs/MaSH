@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
               File: plugin_menus.py
                  Date: 2026/03/24
-            Version: 1.3.0-2026.04.03
+            Version: 1.3.0-2026.04.06
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -39,10 +39,24 @@ def clear():
     os.system('clear' if os.name != 'nt' else 'cls')
 
 class Menu:
-    def __init__(self, commands, items):
+    def __init__(self, commands, menu):
         self.commands = commands
-        self.items = items
+        self.menu = menu
+        self.items = self.get_items()
         self._rendering = True
+
+    def get_items(self):
+        # Replace with a database in future.
+        if self.menu == 'projects':
+            return [{
+                'head': "MaSH", 
+                'body': "~/Documents/SpudWorks/MaSH"
+            }]
+        elif self.menu == 'models':
+            return [{
+                'head': "SpudNet",
+                'body': "A helpful assistant."
+            }]
 
     def start(self):
         self._rendering = True
@@ -56,7 +70,9 @@ class Menu:
                 print("Here are the available items:\n")
 
                 for item in self.items:
-                    print(f"~~~ {item['head']} ~~~\n{item['body']}\n")
+                    head = f"~~~ {item['head']} ~~~"
+                    
+                    print(f"{head}\n{item['body']}\n")
 
             else:
                 print("There are no items here!\n")
@@ -77,31 +93,43 @@ class Menu:
 
         clear()
 
+    def remove_item(self):
+        name = input("Item Name >>> ")
+        new_items = []
+
+        for item in self.items:
+            if name in item['head']:
+                self.items.remove(item)
+
     def exit_menu(self):
         self._rendering = False
+
 
 class ProjectMenu(Menu):
     def __init__(self):
         self.commands = {
             'import': self.import_project,
-            'remove': self.remove_project,
+            'remove': self.remove_item,
             'exit': self.exit_menu
         }
-        self.projects = self.get_projects()
-
-        super().__init__(self.commands, self.projects)
-
-    def get_projects(self):
-        return [{
-            'head': "MaSH", 
-            'body': "/home/bruhtato/Documents/SpudWorks/MaSH"
-        }]
+        super().__init__(self.commands, "projects")
 
     def import_project(self):
-        print("work in progress...")
+        name = path = None
 
-    def remove_project(self):
-        print("work in progress...")
+        while True:
+            clear()
+            
+            name = input("Project Name >>> ")
+            path = input("Project Path >>> ")
+
+            print("Is this correct?\n")
+            print(f"Name: {name}\nPath: {path}")
+
+            if input(" (y/n) >>> ")[0] == 'y':
+                break
+
+        self.items.append({'head': name, 'body': path})
 
 
 class AssistantMenu(Menu):
@@ -109,17 +137,12 @@ class AssistantMenu(Menu):
         self.commands = {
             'chat': self.chat,
             'create': self.create,
+            'remove':self.remove_item,
             'exit': self.exit_menu
         }
         self.models = self.get_models()
 
-        super().__init__(self.commands, self.models)
-    
-    def get_models(self):
-        return [{
-            'head': "SpudNet",
-            'body': "A helpful assistant."
-        }]
+        super().__init__(self.commands, "models")
 
     def chat(self):
         print("work in progress...")

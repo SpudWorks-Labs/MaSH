@@ -54,7 +54,7 @@ class CommandProcessor:
 
     def spud_help(self):
         print("Here are all of the available commnads:\n")
-        print("@>ai : Create and manage AI Assistant Models.")
+        print("@>ai : Create and manage AI Models.")
         print("@>pm : Create an manage Projects.")
         print("@>?? : Display this message.")
 
@@ -98,7 +98,7 @@ class CommandProcessor:
         ~ Change the current working directory to the path ~
 
         Arguments:
-            path (list) : The path the user wants to travel to.
+            path (list) : The path to travel to.
         """
 
         try:

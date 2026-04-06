@@ -180,6 +180,11 @@
     and did some code clean up.
   - Need to make `Menu.render()` cleaner.
 
+* 17:20
+  - Updated the the Menu Template to be more robust and
+    included a remove item method.
+  - Also, some minor code improvements have been made.
+
 ---
 
 ## TO-DO

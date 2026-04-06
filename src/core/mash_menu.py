@@ -67,6 +67,7 @@ class Terminal:
 
         os.system("clear" if os.name != 'nt' else "cls")
         msg = "Welcome to MaSH: The Productive Terminal"
+        # Make this obtain from a file or something.
         mash_logo_lines = [            
             r" ______   ______   _____   ________  ___   ___ ",
             r"|      | |      | / __  | /   _____)|   | |   |",
@@ -74,7 +75,7 @@ class Terminal:
             r"|  |  |   |  |  | ___/  |(______   )|    _    |",
             r"|  |   | |   |  |/ __   | ______)  )|   | |   |",
             r"|___|   V   |___||___/|_|(________/ |___| |___|",
-        "",
+            "",
             f"<b><style fg='#FF69B4'>{msg}</style></b>"
         ]
 
@@ -91,10 +92,14 @@ class Terminal:
         )
         time.sleep(0.1)
 
-        msg = "Type your command or <b>exit</b> to leave MaSH"
+        msg = "Type a command or <b>exit</b> to leave MaSH"
 
         print_formatted_text(
-            HTML(f"<ansigreen>{msg}</ansigreen>"), end='\n\n')
+            HTML(
+                f"<ansigreen>{msg}</ansigreen>"
+            ),
+            end='\n\n'
+        )
         time.sleep(0.2)
 
 
@@ -104,20 +109,23 @@ class Terminal:
         """
         
         while self._is_running:
-            user_input = prompt(self.config["prompt"], style=self.style)
+            cmd = prompt(
+                self.config["prompt"],
+                style=self.style
+            )
 
             # ~ Exit the terminal. ~ #
-            if user_input.lower() == 'exit':
+            if cmd.lower() == 'exit':
                 self._is_running = False
                 continue
 
             # ~ Check the current directoy. ~ #
-            elif user_input.lower() == 'cwd':
+            elif cmd.lower() == 'cwd':
                 print(self.cwd)
                 continue
 
             # ~ Process the command. ~ #
-            current_path = self.processor.process_command(user_input)
+            cwd = self.processor.process_command(cmd)
 
-            if current_path:
-                self.cwd = current_path
+            if cwd:
+                self.cwd = cwd
