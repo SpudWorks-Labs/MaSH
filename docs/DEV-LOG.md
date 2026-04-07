@@ -232,7 +232,7 @@
 	- Also, I finished Phase 1E and by extension - Phase 1.
 
 * 18:30
-	- Updated the `ROADMPA.md` to plan for Phase 2 of MaSH.
+	- Updated the `ROADMAP.md` to plan for Phase 2 of MaSH.
 
 ---
 
