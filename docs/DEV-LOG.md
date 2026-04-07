@@ -226,8 +226,14 @@
 	- Made the logo a global CONSTANT to keep the file to
 	  60 characters and less per row.
 
+* 17:23
+	- Starting to brainstorm the project management tool
+	  and how I should approach it.
+	- Also, I finished Phase 1E and by extension - Phase 1.
+
+* 18:30
+	- Updated the `ROADMPA.md` to plan for Phase 2 of MaSH.
+
 ---
 
 ## TO-DO
-**[!!!!!]** Clean up and make sure the code is ready for
-phase 2. (DONE?)
