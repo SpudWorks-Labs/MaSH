@@ -21,7 +21,8 @@ assistance, and other productivity tools.
 1. **The Terminal Emulator**: Establish a functional,
     customizable shell environment.
 2. **The Workforce**: Integrate productivity boosters
-    including Project Management, Git automation, and Local AI.
+    including Project Management, Git automation, and
+    Local AI.
 3. **Mashed Together**: Transition to a standalone binary
     (Rust or C/C++) for maximum performance and portability.
 
@@ -35,11 +36,22 @@ the core terminal logic, we use a modulated file-structure.
 MaSH/
 ├── docs/
 │   ├── ARCHITECTURE.md
-│   └── DEV_LOG.md
+│   ├── CHANGELOG.md
+│   ├── DEV_LOG.md
+│   └── ROADMAP.md
 ├── src/
 │   ├── core/           # Shell and terminal logic.
-│   ├── plugins/        # Logic for @> commands.
+│   │   ├── mash_config.py
+│   │   └── proc_commands.py
+│   ├── menus/          # Logic for the menus.
+│   │   ├── assistans_menu.py
+│   │   ├── mash_menu.py
+│   │   ├── plugin_menu_template.py
+│   │   └── projects_menu.py
 │   └── main.py
+├── tests/              # Random tests.
+│   ├── ...
+│   ...
 ├── .gitignore
 ├── LICENSE
 ├── README.md
