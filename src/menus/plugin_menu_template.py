@@ -4,9 +4,9 @@
                 Program Name: MaSH.
 Description: A terminal that is built for productivity and
                     efficiency.
-              File: plugin_menus.py
+            File: plugin_menu_template.py
                  Date: 2026/03/24
-            Version: 1.3.0-2026.04.06
+            Version: 1.5.1-2026.04.07
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -34,6 +34,7 @@ If not, see <https://www.gnu.org/licenses/>
 import os
 
 
+# Maybe make into a 'global' file module.
 def clear():
     """
     ~ Clear the screen. ~
@@ -41,46 +42,55 @@ def clear():
 
     os.system('clear' if os.name != 'nt' else 'cls')
 
+
 class Menu:
     """
     ~ Template class for the menus. ~ 
 
     Functions:
-        - __init__ : Initialize the menu template.
-        - get_items : Get the necessary items.
-        - start : Start the menu and render it.
-        - render_items : Render the items found.
-        - render_commands : Render the available
-          commands.
-        - render_prompt : Render the command prompt.
-        - render : Render the entire menu.
-        - remove_item : Remove and item from the list.
-        - exit_menu : Exit the menu.
+        - __init__        : Initialize the menu template.
+        - get_items       : Get the necessary items.
+        - start           : Start the menu and render it.
+        - render_items    : Render the items found.
+        - render_commands : Render the availablecommands.
+        - render_prompt   : Render the command prompt.
+        - render          : Render the entire menu.
+        - remove_item     : Remove and item from the list.
+        - exit_menu       : Exit the menu.
 
     """
 
-    def __init__(self, commands, menu, render_prompt):
+    def __init__(self, commands, menu, display_prompt):
         """
         ~ Initialize the Menu Template. ~
 
         Arguments:
-            - commands : A dictionary of available
-              commands.
-            - menu : The name of the menu.
-            - render_prompt : Render the command prompt.
+            - commands
+                (dict)     : A dictionary of available
+                             commands.
+            - menu
+                (str)      : The name of the menu.
+            - render_prompt 
+                (function) : Render the command prompt.
 
         Attributes:
-            - commands : Equals commands argument.
-            - menu : Equals the menu argument.
-            - render_prompt : Equals the render_prompt argument.
-            - items : A list of all of the items.
-            - _rendering : State of if the menu is
-              rendering.
+            - commands
+                (dict)     : Equals commands argument.
+            - menu
+                (str)      : Equals the menu argument.
+            - render_prompt
+                (function) : Equals the render_prompt
+                             argument.
+            - items
+                (list)     : A list of all of the items.
+            - _rendering
+                (bool)     : State of if the menu is
+                             rendering.
         """
 
         self.commands = commands
         self.menu = menu
-        self.render_prompt = render_prompt
+        self.display_prompt = display_prompt
         self.items = self.get_items()
         self._rendering = True
 
@@ -133,6 +143,11 @@ class Menu:
     def render_commands(self, command_list):
         """
         ~ Render all of the available commands. ~
+
+        Arguments:
+            - command_list
+                (list) : A list of all the available
+                         commands.
         """
 
         # ~ Display each command in a 3 per row format. ~ #
@@ -145,12 +160,17 @@ class Menu:
     def render_prompt(self, command_list):
         """
         ~ Render the command prompt. ~
+
+        Arguments:
+            - command_list
+                (list) : A list containing the available
+                         commands.
         """
 
-        user_input = self.render_prompt()
+        user_input = self.display_prompt()
 
-        # ~ Check if the command is available and run ~ #
-        # ~ its method.                               ~ #
+        # ~ Check for the command ~ #
+        # ~ and run its method.   ~ #
         if user_input in command_list:
             self.commands[user_input]()
 
@@ -175,7 +195,7 @@ class Menu:
 
     def remove_item(self):
         """
-        ~ Remove an item from the irtems list. ~
+        ~ Remove an item from the items list. ~
         """
 
         name = input("Item Name >>> ")
@@ -192,107 +212,3 @@ class Menu:
         """
 
         self._rendering = False
-
-
-class ProjectMenu(Menu):
-    """
-    ~ The Project Menu logic and information. ~
-
-    Inherits Menu Class
-
-    Functions:
-        - __init__ : Initialize the project menu.
-        - import_project : Import a new project.
-    """
-
-    def __init__(self, render_prompt):
-        """
-        ~ Initialize the project manager menu. ~
-
-        Arguments:
-            - render_prompt : The function to render the
-              customized prompt.
-
-        Attributes:
-            - commands dict : A dictionary of all the
-              available commands.
-        """
-
-        self.commands = {
-            'import': self.import_project,
-            'remove': self.remove_item,
-            'exit': self.exit_menu
-        }
-        super().__init__(self.commands, "projects", render_prompt)
-
-    def import_project(self):
-        """
-        ~ Import a new project into the items list. ~
-        """
-
-        name = path = None
-
-        # ~ Get the information of the project. ~ #
-        while True:
-            clear()
-            
-            name = input("Project Name >>> ")
-            path = input("Project Path >>> ")
-
-            print("Is this correct?\n")
-            print(f"Name: {name}\nPath: {path}")
-
-            # ~ Verify the user is happy with the informatino. ~ #
-            if input(" (y/n) >>> ")[0] == 'y':
-                break
-
-        self.items.append({'head': name, 'body': path})
-
-
-class AssistantMenu(Menu):
-    """
-    ~ The calss to handle the Assistant Menu. ~
-
-    Inherits Menu Class
-
-    Functions:
-        - __init__ : Initialize the Assitants Menu.
-        - chat : Talk to the selected model.
-        - create : Create a new custom Assistant.
-    """
-
-    def __init__(self, render_prompt):
-        """
-        ~ Initialize the Assistant Menu. ~
-
-        Arguments:
-            - render_prompt : TThe function to render the
-              customized prompt.
-
-        Attributes:
-            - commands dict : A dictionary of all of the
-              available commands.
-        """
-
-        self.commands = {
-            'chat': self.chat,
-            'create': self.create,
-            'remove':self.remove_item,
-            'exit': self.exit_menu
-        }
-
-        super().__init__(self.commands, "models", render_prompt)
-
-    def chat(self):
-        """
-        ~ Start chatting with the selected LLM model. ~
-        """
-
-        print("work in progress...")
-
-    def create(self):
-        """
-        ~ Create a new model. ~
-        """
-
-        print("work in progress...")

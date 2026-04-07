@@ -134,8 +134,8 @@
 
 ### 2026/04/01
 * 06:50
-    - I have almost finished the projects menu.
-   - I just need to make the projects allow for a scrolling
+	- I have almost finished the projects menu.
+	- I just need to make the projects allow for a scrolling
       window kind of feature.
 
 * 21:40
@@ -169,41 +169,65 @@
       code and add documentation comments.
 
 * 20:20
-  - Updated the codebase to version 1.3.0-2026.03.04
-    Matutinal build.
+	- Updated the codebase to version 1.3.0-2026.03.04
+      Matutinal build.
 
 ---
 
 ### 2026/04/06
 * 16:19
-  - Created a Menu Template Class for `plugin_menus.py`
-    and did some code clean up.
-  - Need to make `Menu.render()` cleaner.
+	- Created a Menu Template Class for `plugin_menus.py`
+	  and did some code clean up.
+	- Need to make `Menu.render()` cleaner.
 
 * 17:20
-  - Updated the the Menu Template to be more robust and
-    included a remove item method.
-  - Also, some minor code improvements have been made.
+	- Updated the the Menu Template to be more robust and
+	  included a remove item method.
+	- Also, some minor code improvements have been made.
 
 * 17:38 (ay)
-  - Cleaned up `Menu.render()` with new methods to make the
-    code concise and maintainable.
-  - I now need to add the custom prompt to the SpudMenus.
-  - I also need to add comments and doc-strings.
+	- Cleaned up `Menu.render()` with new methods to make the
+	  code concise and maintainable.
+	- I now need to add the custom prompt to the SpudMenus.
+	- I also need to add comments and doc-strings.
 
 * 18:23
-  - Implemented the custom prompt for the SpudMenus.
+	- Implemented the custom prompt for the SpudMenus.
 
 * 20:52
-  - Added comments and doc-strings.
-  - Not in the right mind-space, so I left out some type
-    declarations and other things.
-  - A full codebase sweep would be beneficial before moving on.
+	- Added comments and doc-strings.
+	- Not in the right mind-space, so I left out some type
+      declarations and other things.
+	- A full codebase sweep would be beneficial before
+      moving on.
+
+* 16:21
+	- Did a codebase sweep and ensured comments and
+      doc-strings are correct.
+	- Found I should shorten the length of the
+      `plugin_menus.py` file and create a function
+      or something to make the Terminal Logo fit within
+      SpudWorks 60 character row constraints.
+  -   Debating if I should fix those issues or move on to
+      Phase 2.
+
+* 14:50
+	- Decided to go ahead with the aforementioned issues.
+	- Shortened the length of `plugin_menus.py` by making
+      a new module folder named `menus` for those types of
+      files. The file is still quite long, but that might
+      just be from the doc-strings.
+	- Renamed `plugin_menus.py` into
+      `plugin_menu_template.py` since it only holds the
+      `Menu` template class.
+  	- Moving on to make the mash logo Spud-PEP compliant.
+
+* 17:14
+	- Made the logo a global CONSTANT to keep the file to
+	  60 characters and less per row.
 
 ---
 
 ## TO-DO
-**[!!!!!!]** Do a codebase sweep for comment and code
-clarity.
 **[!!!!!]** Clean up and make sure the code is ready for
-phase 2.
+phase 2. (DONE?)

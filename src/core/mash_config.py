@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                File: mash_config.py
                  Date: 2026/03/24
-            Version: 1.5.0-2026.04.06
+            Version: 1.5.1-2026.04.07
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -40,13 +40,15 @@ def create_config(config_file: str):
     ~ Create the config file if not found. ~
 
     Argments:
-        - config_file (str) : The path of the config file. 
+        - config_file
+            (str) : The path of the config file.
     """
     stock_info = {
         "prompt": ">>>",
         "style": "#FF69B4"
     }
 
+    # ~ Create a new config file. ~ #
     with open(config_file, 'w') as cfg_file:
         json.dump(stock_info, cfg_file, indent=4)
         cfg_file.write('\n')
@@ -78,6 +80,7 @@ def load_config():
             if not config["style"]:
                 raise KeyError()
 
+        # ~ A requird key is not found. ~ #
         except KeyError as ke:
             error_msg = f"Primary Key not found: {ke}"
             print("MaSH Error: {error_msg}")

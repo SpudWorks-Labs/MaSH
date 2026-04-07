@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                   File: main.py
                  Date: 2026/03/24
-            Version: 1.5.0-2026.04.06
+            Version: 1.5.1-2026.04.07
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -31,12 +31,12 @@ If not, see <https://www.gnu.org/licenses/>
 
 
 # ~ Import System Modules. ~ #
+import json
 import os
 import subprocess
-import json
 
 # ~ Import Local Modules. ~ #
-from core.mash_menu import Terminal
+from menus.mash_menu import Terminal
 
 
 class Mash:
@@ -51,6 +51,11 @@ class Mash:
     def __init__(self):
         """
         ~ Initialize the terminal program. ~
+
+        Attributes:
+            - terminal
+                (Terminal) : An instance of the class that
+                             handles the terminal logic.
         """
 
         self.terminal = Terminal()
@@ -64,6 +69,7 @@ class Mash:
         self.terminal.prompt_menu()
 
 
+# ~ Ran as the main file. ~ #
 if __name__ == '__main__':
     mash = Mash()
     mash.execute()
