@@ -55,7 +55,7 @@ first plugin.
 
 ---
 
-### Project Menu
+### Project Menu (IN-PROGRESS)
 This menu helps the user create and maintain their projects
 in a simple menu.
 

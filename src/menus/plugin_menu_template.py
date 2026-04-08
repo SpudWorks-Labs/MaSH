@@ -31,16 +31,7 @@ If not, see <https://www.gnu.org/licenses/>
 
 
 # ~ Import System Modules. ~#
-import os
-
-
-# Maybe make into a 'global' file module.
-def clear():
-    """
-    ~ Clear the screen. ~
-    """
-
-    os.system('clear' if os.name != 'nt' else 'cls')
+from utilities.utils import clear
 
 
 class Menu:

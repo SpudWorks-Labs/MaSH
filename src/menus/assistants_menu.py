@@ -30,7 +30,7 @@ If not, see <https://www.gnu.org/licenses/>
 """
 
 
-from menus.plugin_menu_template import Menu
+from utilities.utils import Menu
 
 
 class AssistantMenu(Menu):

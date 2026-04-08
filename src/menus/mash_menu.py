@@ -44,7 +44,7 @@ from core.proc_commands import (
     CommandProcessor, display_prompt
 )
 # Need to move this to a utilities file.
-from menus.plugin_menu_template import clear
+from utilities.utils import clear
 
 MSG = "Welcome to MaSH: The Productive Terminal"
 MASH_LOGO = [            
