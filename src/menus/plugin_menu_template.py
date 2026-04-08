@@ -31,6 +31,7 @@ If not, see <https://www.gnu.org/licenses/>
 
 
 # ~ Import System Modules. ~#
+from utilities.database import read_database, remove_database
 from utilities.utils import clear
 
 
@@ -40,7 +41,6 @@ class Menu:
 
     Functions:
         - __init__        : Initialize the menu template.
-        - get_items       : Get the necessary items.
         - start           : Start the menu and render it.
         - render_items    : Render the items found.
         - render_commands : Render the availablecommands.
@@ -82,28 +82,8 @@ class Menu:
         self.commands = commands
         self.menu = menu
         self.display_prompt = display_prompt
-        self.items = self.get_items()
+        self.items = read_database(self.menu)
         self._rendering = True
-
-    def get_items(self):
-        """
-        ~ Get a list of the items for the menu. ~
-
-        Returns;
-            list : a list containing all of the items.
-        """
-
-        # Replace with a database in future.
-        if self.menu == 'projects':
-            return [{
-                'head': "MaSH", 
-                'body': "~/Documents/SpudWorks/MaSH"
-            }]
-        elif self.menu == 'models':
-            return [{
-                'head': "SpudNet",
-                'body': "A helpful assistant."
-            }]
 
     def start(self):
         """
@@ -119,14 +99,17 @@ class Menu:
         """
 
         # ~ Check if there are items in the list. ~ #
+        
+        self.items = read_database(self.menu)
+
         if self.items:
             print("Here are the available items:\n")
 
             # ~ Display the items. ~ #
             for item in self.items:
-                head = f"~~~ {item['head']} ~~~"
+                head = f"~~~ {item[0]} ~~~"
                 
-                print(f"{head}\n{item['body']}\n")
+                print(f"{head}\n{item[1]}\n")
 
         else:
             print("There are no items here!\n")
@@ -176,7 +159,7 @@ class Menu:
 
             self.render_items()
             
-            print("\n")
+            print("\n\n")
             command_list = list(self.commands.keys())
 
             self.render_commands(command_list)
@@ -192,10 +175,10 @@ class Menu:
         name = input("Item Name >>> ")
         new_items = []
 
-        # ~ Remove the item form the list if it exists. ~ #
+        # ~ Remove the item from the list if it exists. ~ #
         for item in self.items:
-            if name in item['head']:
-                self.items.remove(item)
+            if name in item[0]:
+                remove_database(self.menu, name)
 
     def exit_menu(self):
         """

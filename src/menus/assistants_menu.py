@@ -30,7 +30,8 @@ If not, see <https://www.gnu.org/licenses/>
 """
 
 
-from utilities.utils import Menu
+from menus.plugin_menu_template import Menu
+from utilities.utils import clear
 
 
 class AssistantMenu(Menu):
@@ -63,7 +64,7 @@ class AssistantMenu(Menu):
         self.commands = {
             'chat'  : self.chat,
             'create': self.create,
-            'remove':self.remove_item,
+            'remove': self.remove_item,
             'exit'  : self.exit_menu
         }
 

@@ -211,6 +211,9 @@
   -   Debating if I should fix those issues or move on to
       Phase 2.
 
+---
+
+### 2026/04/07
 * 14:50
 	- Decided to go ahead with the aforementioned issues.
 	- Shortened the length of `plugin_menus.py` by making
@@ -236,4 +239,20 @@
 
 ---
 
+### 2026/04/08
+* 05:09
+	- A database for the projects and models has been
+	  created.
+	- Projects can be added to and removed from that
+	  database.
+
+* 05:53
+	- Can now traverse through the projects structure
+	  but also can leave the projects sandbox.
+	- Need to ensure the item display is clean and the
+	  command handling is robust.
+
+---
+
 ## TO-DO
+**[!!!!!!]** Finish implementing the `ProjectDisplay` class.

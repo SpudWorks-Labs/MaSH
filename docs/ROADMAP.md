@@ -59,7 +59,7 @@ first plugin.
 This menu helps the user create and maintain their projects
 in a simple menu.
 
-#### 2.A1: Project Creation
+#### 2.A1: Project Creation (COMPLETE)
 This menu allows the user to create a new project with the
 required settings and configurations for provided features.
 

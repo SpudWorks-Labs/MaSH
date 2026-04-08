@@ -28,3 +28,80 @@ Public License along with this program.
 If not, see <https://www.gnu.org/licenses/>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 """
+
+
+from pathlib import Path
+from pathvalidate import is_valid_filepath
+import validators
+
+from utilities.database import read_database
+
+
+class Project:
+    def __init__(self):
+        try:
+            self.name = self.get_project_name()
+            self.path = self.get_project_path()
+            self.repos = self.get_project_repos()
+        except Exception as e:
+            print(e)
+
+    def get_project_name(self):
+        while True:
+            name = input("Project Name >>> ")
+            length = len(name)
+
+            if length == 0:
+                print("Name cannot be empty!")
+                continue
+
+            if length > 15:
+                print("Name cannot exceed 15 characters!")
+                continue
+
+            projects = read_database('projects')
+            project_names = []
+
+            for project in projects:
+                project_names.append(project[0])
+
+            if name in project_names:
+                print("Name already exists!")
+                continue
+
+            break
+
+        return name
+
+    def get_project_path(self):
+        while True:
+            path = input("Project Path >>> ")
+
+            if len(path) == 0:
+                print("Path cannot be empty!")
+                continue
+
+            # if not is_valid_filepath(path):
+            #     print("Path is not valid!")
+            #     continue
+
+            if not Path(path).exists():
+                # Introduce a path creator. 
+                print("Path does not exist!")
+                continue
+
+            break
+
+        return path
+
+    def get_project_repos(self):
+        while True:
+            repo = input("Repo Link >>> ").strip()
+
+            if not validators.url(repo):
+                print("Link is not valid!")
+                continue
+
+            break
+
+        return repo

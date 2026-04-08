@@ -37,6 +37,7 @@ import subprocess
 
 # ~ Import Local Modules. ~ #
 from menus.mash_menu import Terminal
+from utilities.database import init_database
 
 
 class Mash:
@@ -57,7 +58,7 @@ class Mash:
                 (Terminal) : An instance of the class that
                              handles the terminal logic.
         """
-
+        init_database()
         self.terminal = Terminal()
         self.terminal.welcome_message()
 

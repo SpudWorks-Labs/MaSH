@@ -30,7 +30,37 @@ If not, see <https://www.gnu.org/licenses/>
 """
 
 
-from utilities.utils import Menu
+import os
+from pathlib import Path
+
+from menus.plugin_menu_template import Menu
+from utilities.database import update_database, read_database
+from utilities.utils import clear
+from utilities.validation import Project
+
+
+class ProjectDisplay:
+    def __init__(self, project):
+        self.name = project[0]
+        self.path = project[1]
+        self.repos = project[2]
+
+    def display(self):
+        while True:
+            print(self.path)
+            items = Path(self.path).iterdir()
+            item_base = [item.name for item in items]
+            for item in item_base:
+                print(item)
+                
+            user_input = input(" >>> ").split(" ")
+
+            if user_input[0] == 'cd':
+                if user_input[1] in item_base:
+                    self.path += "/" + user_input[1]
+                elif user_input[1] == '..':
+                    length = len("/" + Path(self.path).name)
+                    self.path = self.path[:-length]
 
 
 class ProjectMenu(Menu):
@@ -62,6 +92,7 @@ class ProjectMenu(Menu):
         self.commands = {
             'import': self.import_project,
             'remove': self.remove_item,
+            'select': self.select_project,
             'exit'  : self.exit_menu
         }
         super().__init__(
@@ -70,25 +101,27 @@ class ProjectMenu(Menu):
             render_prompt
         )
 
+    def select_project(self):
+        name = input("Projects Name >>> ")
+
+        projects = read_database('projects')
+        project_names = [project[0] for project in projects]
+
+        if name in project_names:
+            for project in projects:
+                if name == project[0]:
+                    ProjectDisplay(project).display()
+
     def import_project(self):
         """
         ~ Import a new project into the items list. ~
         """
 
-        name = path = None
+        try:
+            project = Project()
 
-        # ~ Get the information of the project. ~ #
-        while True:
-            clear()
-            
-            name = input("Project Name >>> ")
-            path = input("Project Path >>> ")
+            update_database("projects", (project.name, project.path, project.repos))
+        except Exception as e:
+            print(e)
 
-            print("Is this correct?\n")
-            print(f"Name: {name}\nPath: {path}")
-
-            # ~ Verify the information is correct. ~ #
-            if input(" (y/n) >>> ")[0] == 'y':
-                break
-
-        self.items.append({'head': name, 'body': path})
+            input("Press ENTER to continue...")
