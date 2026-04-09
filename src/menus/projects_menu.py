@@ -33,34 +33,102 @@ If not, see <https://www.gnu.org/licenses/>
 import os
 from pathlib import Path
 
+import git
+
 from menus.plugin_menu_template import Menu
-from utilities.database import update_database, read_database
+from utilities.database import insert_database, read_database, update_database
 from utilities.utils import clear
-from utilities.validation import Project
+from utilities.validation import Project, ProjectName, ProjectPath, ProjectRepos
 
 
 class ProjectDisplay:
     def __init__(self, project):
-        self.name = project[0]
-        self.path = project[1]
-        self.repos = project[2]
+        self.name = project['name']
+        self.path = project['path']
+        self.basename = Path(self.path).name
+        self.repos = project['repos']
+
+    def save_project(self, commit_msg):
+        try:
+            print(self.repos)
+            repo = git.Repo(self.path)
+            repo.git.add(A=True)
+
+            if repo.is_dirty(untracked_files=True):
+                msg = commit_msg or "MaSH Auto-Save!"
+                repo.index.commit(msg)
+            else:
+                return "No changes to save!"
+
+            origin = repo.remote(name='origin')
+            info = origin.push()
+        
+            return f"Push successful: {info[0].summary}"
+            
+        except Exception as e:
+            return f"Git Error: {e}"
 
     def display(self):
         while True:
-            print(self.path)
             items = Path(self.path).iterdir()
-            item_base = [item.name for item in items]
-            for item in item_base:
-                print(item)
-                
-            user_input = input(" >>> ").split(" ")
+            item_bases = [item.name for item in items]
 
-            if user_input[0] == 'cd':
-                if user_input[1] in item_base:
-                    self.path += "/" + user_input[1]
-                elif user_input[1] == '..':
-                    length = len("/" + Path(self.path).name)
+            for i, item in enumerate(item_bases, 1):
+                print(item, end='\t')
+
+                if i % 3 == 0:
+                    print("\n")
+                
+            # This will be replaced by the command processor.
+            user_input = input("\n\n >>> ").split(" ")
+
+            if user_input[0] == '..':
+                basename = Path(self.path).name
+
+                if basename != self.basename:
+                    length = len("/" + basename)
                     self.path = self.path[:-length]
+                else:
+                    print("Cannot leave the projects directory.")
+
+            elif user_input[0] in item_bases:
+                new_path = self.path + '/' + user_input[0]
+                if os.path.isdir(new_path):
+                    self.path = new_path
+
+            elif user_input[0] == 'edit':
+                print("Editing the project settings...")
+                print(f"Name: {self.name}")
+                print(f"Path: {self.path}")
+                print(f"Repos: {self.repos}")
+
+                print("What do you want to edit?\n\n\tname\tpath\trepo")
+
+                user_input = input(" >>> ")
+
+                if user_input == 'name':
+                    name = str(ProjectName())
+                    update_database('projects', self.name, {'name': name})
+
+                elif user_input == 'path':
+                    path = str(ProjectPath())
+                    update_database('projects', self.name, {'path': path})
+
+                elif user_input == 'repo':
+                    repos = str(ProjectRepos())
+                    update_database('projects', self.name, {'repos': repos})
+
+            elif user_input[0] == "save":
+                # Update this to be more robust.
+                msg = input("Commit Message >>> ")
+
+                print(self.save_project(msg))
+
+            elif user_input[0] == 'run':
+                pass
+
+            elif user_input[0] == 'exit':
+                break
 
 
 class ProjectMenu(Menu):
@@ -105,11 +173,11 @@ class ProjectMenu(Menu):
         name = input("Projects Name >>> ")
 
         projects = read_database('projects')
-        project_names = [project[0] for project in projects]
+        project_names = [project['name'] for project in projects]
 
         if name in project_names:
             for project in projects:
-                if name == project[0]:
+                if name == project['name']:
                     ProjectDisplay(project).display()
 
     def import_project(self):
@@ -120,7 +188,11 @@ class ProjectMenu(Menu):
         try:
             project = Project()
 
-            update_database("projects", (project.name, project.path, project.repos))
+            insert_database("projects", {
+                'name': project.name, 
+                'path': project.path,
+                'repos': project.repos
+            })
         except Exception as e:
             print(e)
 

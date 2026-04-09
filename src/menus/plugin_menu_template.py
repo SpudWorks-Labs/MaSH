@@ -107,9 +107,14 @@ class Menu:
 
             # ~ Display the items. ~ #
             for item in self.items:
-                head = f"~~~ {item[0]} ~~~"
+                head = f"~~~ {item['name']} ~~~"
+
+                if self.menu == 'projects':
+                    body = item['path']
+                elif self.menu == 'assistants':
+                    body = item['desc']
                 
-                print(f"{head}\n{item[1]}\n")
+                print(f"{head}\n{body}\n")
 
         else:
             print("There are no items here!\n")
@@ -129,7 +134,7 @@ class Menu:
             print(f"\t{command}", end='\t')
 
             if i % 3 == 0:
-                print('\n')
+                print('\n\n')
 
     def render_prompt(self, command_list):
         """
@@ -173,12 +178,7 @@ class Menu:
         """
 
         name = input("Item Name >>> ")
-        new_items = []
-
-        # ~ Remove the item from the list if it exists. ~ #
-        for item in self.items:
-            if name in item[0]:
-                remove_database(self.menu, name)
+        remove_database(self.menu, name)
 
     def exit_menu(self):
         """

@@ -37,71 +37,97 @@ import validators
 from utilities.database import read_database
 
 
-class Project:
+class ProjectName:
     def __init__(self):
-        try:
-            self.name = self.get_project_name()
-            self.path = self.get_project_path()
-            self.repos = self.get_project_repos()
-        except Exception as e:
-            print(e)
-
-    def get_project_name(self):
         while True:
-            name = input("Project Name >>> ")
-            length = len(name)
+            try:
+                self.name = self.get_name()
 
-            if length == 0:
-                print("Name cannot be empty!")
-                continue
+                break
 
-            if length > 15:
-                print("Name cannot exceed 15 characters!")
-                continue
+            except Exception as e:
+                print(e)
 
-            projects = read_database('projects')
-            project_names = []
+    def check_name(self, name):
+        projects = [
+            project for project in read_database('projects')
+        ]
 
-            for project in projects:
-                project_names.append(project[0])
+        if name in projects:
+            raise ValueError("Name already exists!")
 
-            if name in project_names:
-                print("Name already exists!")
-                continue
+    def check_length(self, name):
+        length = len(name)
 
-            break
+        if length == 0:
+            raise ValueError("Name cannot be empty!")
+
+        elif length > 15:
+            raise ValueError("Name cannot exceed 15 characters!")
+
+    def get_name(self):
+        name = input("Project Name >>> ")
+        print(name)
+        self.check_length(name)
+        self.check_name(name)
 
         return name
 
-    def get_project_path(self):
+    def __str__(self):
+        return self.name
+
+
+class ProjectPath:
+    def __init__(self):
         while True:
-            path = input("Project Path >>> ")
+            try:
+                self.path = self.get_path()
 
-            if len(path) == 0:
-                print("Path cannot be empty!")
-                continue
+                break
 
-            # if not is_valid_filepath(path):
-            #     print("Path is not valid!")
-            #     continue
+            except Exception as e:
+                print(e)
 
-            if not Path(path).exists():
-                # Introduce a path creator. 
-                print("Path does not exist!")
-                continue
+    def get_path(self):
+        path = input("Project Path >>> ")
 
-            break
+        if len(path) == 0:
+            raise ValueError("Path cannot be empty!")
+
+        if not Path(path).exists():
+            raise FileNotFoundError("The given path does not exist!")
 
         return path
 
-    def get_project_repos(self):
+    def __str__(self):
+        return self.path
+
+
+class ProjectRepos:
+    def __init__(self):
         while True:
-            repo = input("Repo Link >>> ").strip()
+            try:
+                self.repos = self.get_repos()
 
-            if not validators.url(repo):
-                print("Link is not valid!")
-                continue
+                break
 
-            break
+            except Exception as e:
+                print(e)
+
+    def get_repos(self):
+        repo = input("Repo Link >>> ")
+
+        if not validators.url(repo):
+            raise ValueError("Link is not valid!")
 
         return repo
+
+    def __str__(self):
+        return self.repos
+
+
+class Project:
+    def __init__(self):
+        self.name = str(ProjectName())
+        self.path = str(ProjectPath())
+        self.repos = str(ProjectRepos())

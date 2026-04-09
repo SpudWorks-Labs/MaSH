@@ -1,47 +1,76 @@
-import sqlite3
+from peewee import *
 
+# 1. Define the database file
+db = SqliteDatabase('database.db')
 
-database = 'database.db'
+# 2. Define the Base Model to avoid repeating the database config
+class BaseModel(Model):
+    class Meta:
+        database = db
+
+# 3. Define your actual workforce tables
+class Project(BaseModel):
+    name = CharField(unique=True) # Peewee handles the NOT NULL by default
+    path = CharField()
+    repos = CharField(null=True)
+
+class AIModel(BaseModel): 
+    # Renamed to AIModel to avoid confusion with peewee.Model
+    name = CharField(unique=True)
+    body = TextField()
+    model = CharField()
+
+# Map strings to classes for your helper functions
+TABLE_MAP = {
+    'projects': Project,
+    'models': AIModel
+}
 
 
 def init_database():
-    with sqlite3.connect(database) as connection:
-        cursor = connection.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS projects (
-                name TEXT NOT NULL UNIQUE,
-                path TEXT NOT NULL,
-                repo TEXT
-            );
-        ''')
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS models (
-                name TEXT NOT NULL UNIQUE,
-                desc TEXT NOT NULL,
-                model TEXT
-            );
-        ''')
+    """Create tables if they don't exist."""
+    with db:
+        db.create_tables([Project, AIModel])
 
 
-def update_database(table, payload):
-    with sqlite3.connect(database) as connection:
-        cursor = connection.cursor()
-        placeholders = ", ".join(["?"] * len(payload))
-        template = f"({placeholders})"
-        cmd = f"INSERT INTO {table} VALUES {template}"
-        cursor.execute(cmd, payload)
+def insert_database(table, payload):
+    """
+    Programmatically insert data.
+    Usage: insert_database('projects', {'name': 'MaSH', 'path': '/usr/bin'})
+    """
+    model_class = TABLE_MAP.get(table)
+    if model_class:
+        # **payload unpacks the dictionary into keyword arguments
+
+        return model_class.create(**payload)
 
 
 def read_database(table):
-    with sqlite3.connect(database) as connection:
-        cursor = connection.cursor()
-        cursor.execute(f"SELECT * FROM {table}")
+    """Returns all records as a list of dictionaries."""
+    model_class = TABLE_MAP.get(table)
+    if model_class:
+        # .dicts() converts model objects back into readable dictionaries
+        return list(model_class.select().dicts())
 
-        return cursor.fetchall()
+    return []
+
+
+def update_database(table, name, values):
+    """
+    Updates a record by its name.
+    Usage: update_database('projects', 'OldName', {'path': '/new/path'})
+    """
+    model_class = TABLE_MAP.get(table)
+    if model_class:
+        query = model_class.update(**values).where(model_class.name == name)
+
+        return query.execute()
 
 
 def remove_database(table, name):
-    with sqlite3.connect(database) as connection:
-        cursor = connection.cursor()
-        cursor.execute(f"DELETE FROM {table} WHERE name == '{name}'")
-
+    """Deletes a record by name."""
+    model_class = TABLE_MAP.get(table)
+    if model_class:
+        query = model_class.delete().where(model_class.name == name)
+        
+        return query.execute()

@@ -62,7 +62,7 @@ def display_prompt():
         })
 
     return prompt(
-        config['prompt'],
+        '\n\n' + config['prompt'],
         style=style
     )
 
