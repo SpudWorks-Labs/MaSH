@@ -76,6 +76,8 @@ class ProjectDisplay:
         subprocess.call(self.run_command, shell=True)
 
     def display(self):
+        clear()
+
         while True:
             items = Path(self.path).iterdir()
             item_bases = [item.name for item in items]
@@ -85,6 +87,8 @@ class ProjectDisplay:
 
                 if i % 3 == 0:
                     print("\n")
+
+            print("\n\n@>run\t@>save\t@>edit\t@>exit")
                 
             # This will be replaced by the command processor.
             user_input = input("\n\n >>> ").split(" ")
@@ -103,7 +107,7 @@ class ProjectDisplay:
                 if os.path.isdir(new_path):
                     self.path = new_path
 
-            elif user_input[0] == 'edit':
+            elif user_input[0] == '@>edit':
                 print("Editing the project settings...")
                 print(f"Name: {self.name}")
                 print(f"Path: {self.path}")
@@ -130,16 +134,16 @@ class ProjectDisplay:
                     run_command = input("Run Command >>> ")
                     update_database('projects', self.name, {'run_command': run_command})
 
-            elif user_input[0] == "save":
+            elif user_input[0] == "@>save":
                 # Update this to be more robust.
                 msg = input("Commit Message >>> ")
 
                 print(self.save_project(msg))
 
-            elif user_input[0] == 'run':
+            elif user_input[0] == '@>run':
                 self.run()
 
-            elif user_input[0] == 'exit':
+            elif user_input[0] == '@>exit':
                 break
 
 
