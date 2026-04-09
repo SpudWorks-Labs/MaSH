@@ -32,8 +32,11 @@ If not, see <https://www.gnu.org/licenses/>
 
 import os
 from pathlib import Path
+import subprocess
+import sys
 
 import git
+from prompt_toolkit.application import run_in_terminal
 
 from menus.plugin_menu_template import Menu
 from utilities.database import insert_database, read_database, update_database
@@ -47,6 +50,7 @@ class ProjectDisplay:
         self.path = project['path']
         self.basename = Path(self.path).name
         self.repos = project['repos']
+        self.run_command = project['run_command']
 
     def save_project(self, commit_msg):
         try:
@@ -67,6 +71,9 @@ class ProjectDisplay:
             
         except Exception as e:
             return f"Git Error: {e}"
+
+    def run(self):
+        subprocess.call(self.run_command, shell=True)
 
     def display(self):
         while True:
@@ -101,8 +108,9 @@ class ProjectDisplay:
                 print(f"Name: {self.name}")
                 print(f"Path: {self.path}")
                 print(f"Repos: {self.repos}")
+                print(f"Run Command: {self.run_command}")
 
-                print("What do you want to edit?\n\n\tname\tpath\trepo")
+                print("What do you want to edit?\n\n\tname\tpath\trepo\trun")
 
                 user_input = input(" >>> ")
 
@@ -118,6 +126,10 @@ class ProjectDisplay:
                     repos = str(ProjectRepos())
                     update_database('projects', self.name, {'repos': repos})
 
+                elif user_input == 'run':
+                    run_command = input("Run Command >>> ")
+                    update_database('projects', self.name, {'run_command': run_command})
+
             elif user_input[0] == "save":
                 # Update this to be more robust.
                 msg = input("Commit Message >>> ")
@@ -125,7 +137,7 @@ class ProjectDisplay:
                 print(self.save_project(msg))
 
             elif user_input[0] == 'run':
-                pass
+                self.run()
 
             elif user_input[0] == 'exit':
                 break
@@ -191,8 +203,10 @@ class ProjectMenu(Menu):
             insert_database("projects", {
                 'name': project.name, 
                 'path': project.path,
-                'repos': project.repos
+                'repos': project.repos,
+                'run_command': project.run_command
             })
+
         except Exception as e:
             print(e)
 

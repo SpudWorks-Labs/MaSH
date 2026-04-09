@@ -1,26 +1,27 @@
 from peewee import *
 
-# 1. Define the database file
+
 db = SqliteDatabase('database.db')
 
-# 2. Define the Base Model to avoid repeating the database config
+
 class BaseModel(Model):
     class Meta:
         database = db
 
-# 3. Define your actual workforce tables
+
 class Project(BaseModel):
-    name = CharField(unique=True) # Peewee handles the NOT NULL by default
+    name = CharField(unique=True)
     path = CharField()
     repos = CharField(null=True)
+    run_command = CharField(null=True)
 
-class AIModel(BaseModel): 
-    # Renamed to AIModel to avoid confusion with peewee.Model
+
+class AIModel(BaseModel):
     name = CharField(unique=True)
     body = TextField()
     model = CharField()
 
-# Map strings to classes for your helper functions
+
 TABLE_MAP = {
     'projects': Project,
     'models': AIModel

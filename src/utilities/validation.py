@@ -67,7 +67,7 @@ class ProjectName:
 
     def get_name(self):
         name = input("Project Name >>> ")
-        print(name)
+        
         self.check_length(name)
         self.check_name(name)
 
@@ -131,3 +131,4 @@ class Project:
         self.name = str(ProjectName())
         self.path = str(ProjectPath())
         self.repos = str(ProjectRepos())
+        self.run_command = input("Run Command >>> ")
