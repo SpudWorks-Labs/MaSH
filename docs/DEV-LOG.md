@@ -254,5 +254,14 @@
 
 ---
 
+### 2026/04/09
+* 17:57
+  - The project edit and saving feature has been
+    implemented.
+  - Next I need to implement the running feature.
+
+---
+
 ## TO-DO
-**[!!!!!!]** Finish implementing the `ProjectDisplay` class.
+**[!!!]** The running capability needs to be added to
+complete Phase 2.A2

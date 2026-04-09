@@ -77,16 +77,16 @@ The information that is obtained are as follows:
     - Is a valid link.
     - Cannot be empty.
 
-#### 2.A2: Project Selection
+#### 2.A2: Project Selection (IN-PROGRESS)
 A menu for managing the selected project from; repo
 handling, quick tests, folder traversal with future plans
 of system commands for easy folder manipulations.
 
-##### 2.A2.1: Edit Menu
+##### 2.A2.1: Edit Menu (COMPLETED)
 Allows the user to edit the projects information that was
 gathered on creation.
 
-##### 2.A2.2: Save Command
+##### 2.A2.2: Save Command (COMPLETED)
 This command pushes the new changes to the repo
 (if provided) and allows for the user to add a custom
 message. Since `git push` requires a login, that will
