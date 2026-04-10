@@ -50,7 +50,8 @@ from utilities.validation import (
 
 class ProjectDisplay:
     """
-    ~ The class that handles the logic for displaying the selected menu. ~
+    ~ The class that handles the logic for
+      displaying the selected menu. ~
 
     Function:
         - __init__      : Initialize the project displayer.
@@ -177,7 +178,7 @@ class ProjectDisplay:
                 {'path': path}
             )
 
-        # ~ Change the repo link for saving th e project. ~ #
+        # ~ Change repo link for saving the project. ~ #
         elif user_input == 'repo':
             repos = str(ProjectRepos())
             update_database(
@@ -187,6 +188,8 @@ class ProjectDisplay:
 
         # ~ Run the project with the set rule. ~ #
         elif user_input == 'run':
+            # Maybe ask for the command that runs the file
+            # and the path of the file.
             run_command = input("Run Command >>> ")
             update_database(
                 'projects', self.name,
