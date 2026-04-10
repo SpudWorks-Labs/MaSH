@@ -6,7 +6,7 @@ Description: A terminal that is built for productivity and
                     efficiency.
                File: validation.py
                  Date: 2026/04/07
-            Version: 1.5.1-2026.04.07
+            Version: 1.6.1-2026.04.10
 ===========================================================
 
         Copyright (C) 2026 SpudWorks Labs.
@@ -67,7 +67,7 @@ class ProjectName:
 
     def get_name(self):
         name = input("Project Name >>> ")
-        
+
         self.check_length(name)
         self.check_name(name)
 

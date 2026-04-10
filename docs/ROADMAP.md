@@ -92,12 +92,12 @@ This command pushes the new changes to the repo
 message. Since `git push` requires a login, that will
 be handled with a login section in a future version.
 
-##### 2.A2.3: Run Command
+##### 2.A2.3: Run Command (COMPLETED)
 This command runs the project with a set rule that the user
 can set on first usage. This is ran in a `subprocess.call`
 and allow for killing the run.
 
-#### 2.A3: Polishing
+#### 2.A3: Polishing (IN-PROGRESS)
 Polish this Menu so that there will be no issues in the
 future.
 

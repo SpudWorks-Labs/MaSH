@@ -267,8 +267,15 @@
     - A minor clean up of Phase 2.A2.
     - Now saving the project via MaSH.
 
+* 14:50
+    - Did a minor code clean, but need more cleaning with
+      refactors and new modules.
+
+* 15:18
+    - Discovered the run command does not work as intended
+      within another directory.
+
 ---
 
 ## TO-DO
-**[!!!]** The running capability needs to be added to
-complete Phase 2.A2
+**[!!!!!!]** Modulate the Project Menu further.
