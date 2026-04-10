@@ -279,3 +279,7 @@
 
 ## TO-DO
 **[!!!!!!]** Modulate the Project Menu further.
+**[!!!]** Make run command work anywhere as long as the
+project is selected.
+**[!!!]** Allow a wait after menus, especially `@>save`
+**[!!!]** Make the UI better for the Project Manager.
