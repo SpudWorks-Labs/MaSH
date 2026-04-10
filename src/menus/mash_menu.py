@@ -46,6 +46,7 @@ from core.proc_commands import (
 # Need to move this to a utilities file.
 from utilities.utils import clear
 
+
 MSG = "Welcome to MaSH: The Productive Terminal"
 MASH_LOGO = [            
     r" ______   ______   _____   ________  ___   ___ ",

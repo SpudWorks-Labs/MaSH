@@ -43,7 +43,7 @@ from prompt_toolkit.styles import Style
 # ~ Import Local Modules. ~ #
 from core.mash_config import load_config
 from menus.assistants_menu import AssistantMenu
-from menus.projects_menu import ProjectMenu
+from menus.project_manager.menu import ProjectMenu
 
 
 def display_prompt():
