@@ -1,4 +1,33 @@
+"""
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                Company: SpudWorks.
+                Program Name: MaSH.
+Description: A terminal that is built for productivity and
+                    efficiency.
+                 File: display.py
+                 Date: 2026/04/10
+            Version: 1.6.1-2026.04.10
+===========================================================
 
+        Copyright (C) 2026 SpudWorks Labs.
+
+This program is free software: you can redistribute it
+and/or modify it under the terms of the GNU Affero 
+General Public License as published by the Free
+Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be
+useful, but WITHOUT ANY WARRANTY; without even the implied
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE.  See the GNU Affero General Public License for
+more details.
+
+You should have received a copy of the GNU Affero General
+Public License along with this program.
+If not, see <https://www.gnu.org/licenses/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"""
 
 
 import subprocess
@@ -7,23 +36,25 @@ from pathlib import Path
 
 import git
 
+from menus.project_manager.edit_menu import EditMenu
 from utilities.database import update_database
 from utilities.utils import clear
 
+
 class ProjectDisplay:
     """
-    ~ The class that handles the logic for
-      displaying the selected menu. ~
+    ~ The class that handles the logic for displaying the
+      selected menu. ~
 
     Function:
         - __init__      : Initialize the project displayer.
         - save_project  : Push the updated project to the
-                          repo.
+          repo.
         - display_items : Display all of the items in the
-                          current directory.
+          current directory.
         - edit_menu     : Edit the prrojects variables.
         - process_cmd   : Process the command received from
-                          the user.
+          the user.
         - display       : Display the projects directory.
     """
 
@@ -32,25 +63,20 @@ class ProjectDisplay:
         ~ Initialize the Project Displayer. ~
 
         Arguments:
-            - project
-                (dict) : The dictionary of the projects
-                         information.
+            - project     (dict) : The dictionary of the
+              projects information.
 
         Attributes:
-            - name
-                (str)  : The name of the project.
-            - path
-                (str)  : The path to the project.
-            - basename
-                (str)  : The basename of the projects path.
-            - repos
-                (str)  : The repo link for saving and
-                         pushing.
-            - run_command
-                (str)  : The command to run the project.
-            - item_bases
-                (list) : All of the found items in the
-                         current path.
+            - name        (str)  : The name of the project.
+            - path        (str)  : The path to the project.
+            - basename    (str)  : The basename of the
+              projects path.
+            - repos       (str)  : The repo link for saving
+              and pushing.
+            - run_command (str)  : The command to run the
+              project.
+            - item_bases  (list) : All of the found items
+              in the current path.
         """
 
         self.name = project['name']
@@ -59,6 +85,7 @@ class ProjectDisplay:
         self.repos = project['repos']
         self.run_command = project['run_command']
         self.item_bases = []
+        self.edit_menu = EditMenu(project)
 
     def save_project(self, commit_msg):
         """
@@ -66,9 +93,8 @@ class ProjectDisplay:
           message. ~
 
         Arguments:
-            - commit_msg
-                (str) : The message to send with the push
-                        command.
+            - commit_msg (str) : The message to send with
+              the push command.
 
         Returns:
             str : The response from the git attempt.
@@ -108,64 +134,14 @@ class ProjectDisplay:
             if i % 3 == 0:
                 print("\n")
 
-    def edit_menu(self):
-        """
-        ~ Edit the selected projects information. ~
-        """
-
-        # ~ Information message. ~ #
-        print("Editing the project settings...")
-        print(f"Name: {self.name}")
-        print(f"Path: {self.path}")
-        print(f"Repos: {self.repos}")
-        print(f"Run Command: {self.run_command}")
-        print("What do you want to edit?")
-        print("\n\n\tname\tpath\trepo\trun")
-
-        user_input = input(" >>> ")
-
-        # ~ Change the name of the project. ~ #
-        if user_input == 'name':
-            name = str(ProjectName())
-            update_database(
-                'projects', self.name,
-                {'name': name}
-            )
-
-        # ~ Change the projects working path. ~ #
-        elif user_input == 'path':
-            path = str(ProjectPath())
-            update_database(
-                'projects', self.name,
-                {'path': path}
-            )
-
-        # ~ Change repo link for saving the project. ~ #
-        elif user_input == 'repo':
-            repos = str(ProjectRepos())
-            update_database(
-                'projects', self.name,
-                {'repos': repos}
-            )
-
-        # ~ Run the project with the set rule. ~ #
-        elif user_input == 'run':
-            # Maybe ask for the command that runs the file
-            # and the path of the file.
-            run_command = input("Run Command >>> ")
-            update_database(
-                'projects', self.name,
-                {'run_command': run_command}
-            )
-
     def process_cmd(self, user_input):
         """
         ~ Process the users input to manage the project
           or navigate through the file structure. ~
 
         Arguments:
-            - user_input
-                (list) : A list of the command pieces.
+            - user_input (list) : A list of the command
+              pieces.
         """
 
         # ~ Go back a directory within the structure. ~
@@ -185,9 +161,9 @@ class ProjectDisplay:
             if os.path.isdir(new_path):
                 self.path = new_path
 
-        # ~ Edit teh selected project values. ~
+        # ~ Edit the selected project values. ~
         elif user_input[0] == '@>edit':
-            self.edit_menu()
+            self.edit_menu.display()
 
         # ~ Push the changes to the repo. ~
         elif user_input[0] == "@>save":

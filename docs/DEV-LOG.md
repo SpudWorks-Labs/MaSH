@@ -275,11 +275,18 @@
     - Discovered the run command does not work as intended
       within another directory.
 
+* 20:16
+    - The Project Menu has been modulated into "ravioli"
+      which requires a scan to ensure there is no more modulation needed.
+    - I can consider the modulation complete and can focus
+      on cleaning the code and adding comments and such.
+
 ---
 
 ## TO-DO
-**[!!!!!!]** Modulate the Project Menu further.
 **[!!!]** Make run command work anywhere as long as the
 project is selected.
 **[!!!]** Allow a wait after menus, especially `@>save`
 **[!!!]** Make the UI better for the Project Manager.
+**[!]** Need to add comments and doc-strings.
+**[.]** Quick scan of the codebase.
