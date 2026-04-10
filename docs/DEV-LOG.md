@@ -256,9 +256,16 @@
 
 ### 2026/04/09
 * 17:57
-  - The project edit and saving feature has been
-    implemented.
-  - Next I need to implement the running feature.
+    - The project edit and saving feature has been
+      implemented.
+    - Next I need to implement the running feature.
+
+---
+
+### 2026/04/10
+* 05:10
+    - A minor clean up of Phase 2.A2.
+    - Now saving the project via MaSH.
 
 ---
 

@@ -51,6 +51,7 @@ class ProjectDisplay:
         self.basename = Path(self.path).name
         self.repos = project['repos']
         self.run_command = project['run_command']
+        self.item_bases = []
 
     def save_project(self, commit_msg):
         try:
@@ -75,75 +76,87 @@ class ProjectDisplay:
     def run(self):
         subprocess.call(self.run_command, shell=True)
 
+    def display_items(self):
+        items = Path(self.path).iterdir()
+        self.item_bases = [item.name for item in items]
+
+        for i, item in enumerate(self.item_bases, 1):
+            print(item, end='\t')
+
+            if i % 3 == 0:
+                print("\n")
+
+    def edit_menu(self):
+        print("Editing the project settings...")
+        print(f"Name: {self.name}")
+        print(f"Path: {self.path}")
+        print(f"Repos: {self.repos}")
+        print(f"Run Command: {self.run_command}")
+
+        print("What do you want to edit?\n\n\tname\tpath\trepo\trun")
+
+        user_input = input(" >>> ")
+
+        if user_input == 'name':
+            name = str(ProjectName())
+            update_database('projects', self.name, {'name': name})
+
+        elif user_input == 'path':
+            path = str(ProjectPath())
+            update_database('projects', self.name, {'path': path})
+
+        elif user_input == 'repo':
+            repos = str(ProjectRepos())
+            update_database('projects', self.name, {'repos': repos})
+
+        elif user_input == 'run':
+            run_command = input("Run Command >>> ")
+            update_database('projects', self.name, {'run_command': run_command})
+
+    def process_cmd(self, user_input):
+        if user_input[0] == '..':
+            basename = Path(self.path).name
+
+            if basename != self.basename:
+                length = len("/" + basename)
+                self.path = self.path[:-length]
+            else:
+                print("Cannot leave the projects directory.")
+
+        elif user_input[0] in self.item_bases:
+            new_path = self.path + '/' + user_input[0]
+            if os.path.isdir(new_path):
+                self.path = new_path
+
+        elif user_input[0] == '@>edit':
+            self.edit_menu()
+
+        elif user_input[0] == "@>save":
+            # Update this to be more robust.
+            msg = input("Commit Message >>> ")
+
+            print(self.save_project(msg))
+
+        elif user_input[0] == '@>run':
+            self.run()
+
+        elif user_input[0] == '@>exit':
+            return False
+
+        return True
+
     def display(self):
         clear()
 
         while True:
-            items = Path(self.path).iterdir()
-            item_bases = [item.name for item in items]
-
-            for i, item in enumerate(item_bases, 1):
-                print(item, end='\t')
-
-                if i % 3 == 0:
-                    print("\n")
+            self.display_items()
 
             print("\n\n@>run\t@>save\t@>edit\t@>exit")
                 
             # This will be replaced by the command processor.
             user_input = input("\n\n >>> ").split(" ")
 
-            if user_input[0] == '..':
-                basename = Path(self.path).name
-
-                if basename != self.basename:
-                    length = len("/" + basename)
-                    self.path = self.path[:-length]
-                else:
-                    print("Cannot leave the projects directory.")
-
-            elif user_input[0] in item_bases:
-                new_path = self.path + '/' + user_input[0]
-                if os.path.isdir(new_path):
-                    self.path = new_path
-
-            elif user_input[0] == '@>edit':
-                print("Editing the project settings...")
-                print(f"Name: {self.name}")
-                print(f"Path: {self.path}")
-                print(f"Repos: {self.repos}")
-                print(f"Run Command: {self.run_command}")
-
-                print("What do you want to edit?\n\n\tname\tpath\trepo\trun")
-
-                user_input = input(" >>> ")
-
-                if user_input == 'name':
-                    name = str(ProjectName())
-                    update_database('projects', self.name, {'name': name})
-
-                elif user_input == 'path':
-                    path = str(ProjectPath())
-                    update_database('projects', self.name, {'path': path})
-
-                elif user_input == 'repo':
-                    repos = str(ProjectRepos())
-                    update_database('projects', self.name, {'repos': repos})
-
-                elif user_input == 'run':
-                    run_command = input("Run Command >>> ")
-                    update_database('projects', self.name, {'run_command': run_command})
-
-            elif user_input[0] == "@>save":
-                # Update this to be more robust.
-                msg = input("Commit Message >>> ")
-
-                print(self.save_project(msg))
-
-            elif user_input[0] == '@>run':
-                self.run()
-
-            elif user_input[0] == '@>exit':
+            if not self.process_cmd(user_input):
                 break
 
 

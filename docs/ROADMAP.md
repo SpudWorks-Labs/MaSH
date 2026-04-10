@@ -94,7 +94,7 @@ be handled with a login section in a future version.
 
 ##### 2.A2.3: Run Command
 This command runs the project with a set rule that the user
-can set on first usage. This is ran in a `subprocess.Popen`
+can set on first usage. This is ran in a `subprocess.call`
 and allow for killing the run.
 
 #### 2.A3: Polishing
