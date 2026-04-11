@@ -2,7 +2,7 @@
 
 ---
 
-## Current Version: 1.6.1-2026.04.10M
+## Current Version: 1.6.1-2026.04.10N
 This version begins the development of Phase 2 with
 baseline features from the project navigation, project
 pushing, variable editing and execution of the project.

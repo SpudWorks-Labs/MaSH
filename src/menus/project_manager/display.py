@@ -166,7 +166,7 @@ class ProjectDisplay:
             self.edit_menu.display()
 
         # ~ Push the changes to the repo. ~
-        elif user_input[0] == "@>save":
+        elif user_input[0] == "@>push":
             msg = input("Commit Message >>> ")
 
             print(self.save_project(msg))
@@ -192,7 +192,7 @@ class ProjectDisplay:
             self.display_items()
 
             print("\n\n\nAvailable Commands:")
-            print("\n@>run\t@>save\t@>edit\t@>exit")
+            print("\n@>run\t@>push\t@>edit\t@>exit")
             
             user_input = input("\n\n >>> ").split(" ")
 

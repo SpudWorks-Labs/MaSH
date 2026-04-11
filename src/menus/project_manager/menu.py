@@ -77,6 +77,10 @@ class ProjectMenu(Menu):
         )
 
     def select_project(self):
+        """
+        ~ Select the project to work on. ~
+        """
+
         name = input("Projects Name >>> ")
 
         projects = read_database('projects')

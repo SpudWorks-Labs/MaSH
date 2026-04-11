@@ -283,10 +283,19 @@
 
 ---
 
+### 2026/04/11
+* 05:30
+    - Changed the `@>save` command to `@>push` to clarify function.
+
+* 05:57
+    - Finished adding comments and doc-strings.
+
+---
+
 ## TO-DO
 **[!!!]** Make run command work anywhere as long as the
 project is selected.
-**[!!!]** Allow a wait after menus, especially `@>save`
+**[!!!]** Allow a wait after menus, especially `@>push`
 **[!!!]** Make the UI better for the Project Manager.
 **[!]** Need to add comments and doc-strings.
 **[.]** Quick scan of the codebase.

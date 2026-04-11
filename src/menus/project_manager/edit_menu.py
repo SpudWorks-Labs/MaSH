@@ -34,10 +34,22 @@ from validation.project_validation import *
 
 
 class EditMenu:
-    def __init__(self, projects):
-        self.projects = projects
+    def __init__(self, project):
+        """
+        ~ Initialize the edit menu variables. ~
+
+        Argumetns:
+            - project (dict) : A dictionary containing the
+              information for the project.
+        """
+
+        self.project = project
 
     def process_cmd(self):
+        """
+        ~ Process the command to change project settings. ~
+        """
+
         user_input = input(" >>> ")
 
         # ~ Change the name of the project. ~ #
@@ -75,10 +87,13 @@ class EditMenu:
             )
 
     def display(self):
-        # ~ Information message. ~ #
+        """
+        ~ Display the edit project settings menu. ~
+        """
+
         print("Project Settings:")
 
-        for key, value in self.projects.items():
+        for key, value in self.project.items():
             print(f"{key} = {value}")
        
         print("Type the key you want to edit.")
