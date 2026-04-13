@@ -36,53 +36,53 @@ from pathlib import Path
 
 
 def create_config(config_file: str):
-    """
-    ~ Create the config file if not found. ~
+   """
+   ~ Create the config file if not found. ~
 
-    Argments:
-        - config_file
-            (str) : The path of the config file.
-    """
-    stock_info = {
-        "prompt": ">>>",
-        "style": "#FF69B4"
-    }
+   Argments:
+       - config_file
+           (str) : The path of the config file.
+   """
+   stock_info = {
+       "prompt": ">>>",
+       "style": "#FF69B4"
+   }
 
-    # ~ Create a new config file. ~ #
-    with open(config_file, 'w') as cfg_file:
-        json.dump(stock_info, cfg_file, indent=4)
-        cfg_file.write('\n')
+   # ~ Create a new config file. ~ #
+   with open(config_file, 'w') as cfg_file:
+      json.dump(stock_info, cfg_file, indent=4)
+      cfg_file.write('\n')
 
 
 def load_config():
-    """
-    ~ Load the config file create it if non-existant. ~
+   """
+   ~ Load the config file create it if non-existant. ~
 
-    Returns:
-        - dict : The configuration information.
-    """
+   Returns:
+       - dict : The configuration information.
+   """
 
-    config_file = Path('~/.mash').expanduser()
+   config_file = Path('~/.mash').expanduser()
 
-    # ~ Check if the file exists. ~ #
-    if not config_file.exists():
-        create_config(str(config_file))
+   # ~ Check if the file exists. ~ #
+   if not config_file.exists():
+      create_config(str(config_file))
 
-    # ~ Process the config file for terminal settings. ~ #
-    with open(config_file, 'r') as cfg_file:
-        config = json.loads(cfg_file.read())
-        
-        # ~ Ensure that the file has important keys. ~ #
-        try:
-            if not config["prompt"].endswith(" "):
-                config["prompt"] += " "
+   # ~ Process the config file for terminal settings. ~ #
+   with open(config_file, 'r') as cfg_file:
+      config = json.loads(cfg_file.read())
 
-            if not config["style"]:
-                raise KeyError()
+      # ~ Ensure that the file has important keys. ~ #
+      try:
+         if not config["prompt"].endswith(" "):
+            config["prompt"] += " "
 
-        # ~ A requird key is not found. ~ #
-        except KeyError as ke:
-            error_msg = f"Primary Key not found: {ke}"
-            print("MaSH Error: {error_msg}")
+         if not config["style"]:
+            raise KeyError()
 
-        return config
+      # ~ A requird key is not found. ~ #
+      except KeyError as ke:
+         error_msg = f"Primary Key not found: {ke}"
+         print("MaSH Error: {error_msg}")
+
+      return config

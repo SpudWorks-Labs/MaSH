@@ -30,13 +30,12 @@ If not, see <https://www.gnu.org/licenses/>
 """
 
 
-
-import os 
+import os
 
 
 def clear():
-    """
-    ~ Clear the screen. ~
-    """
+   """
+   ~ Clear the screen. ~
+   """
 
-    os.system('clear' if os.name != 'nt' else 'cls')
+   os.system('clear' if os.name != 'nt' else 'cls')

@@ -35,51 +35,51 @@ from utilities.utils import clear
 
 
 class AssistantMenu(Menu):
-    """
-    ~ The class to handle the Assistant Menu. ~
+   """
+   ~ The class to handle the Assistant Menu. ~
 
-    Inherits Menu Class
+   Inherits Menu Class
 
-    Functions:
-        - __init__ : Initialize the Assistants Menu.
-        - chat     : Talk to the selected model.
-        - create   : Create a new custom Assistant.
-    """
+   Functions:
+       - __init__ : Initialize the Assistants Menu.
+       - chat     : Talk to the selected model.
+       - create   : Create a new custom Assistant.
+   """
 
-    def __init__(self, render_prompt):
-        """
-        ~ Initialize the Assistant Menu. ~
+   def __init__(self, render_prompt):
+      """
+      ~ Initialize the Assistant Menu. ~
 
-        Arguments:
-            - render_prompt
-                (function) : The function to render the
-                             customized prompt.
+      Arguments:
+          - render_prompt
+              (function) : The function to render the
+                           customized prompt.
 
-        Attributes:
-            - commands
-                (dict) : A dictionary of all of the
-                         available commands.
-        """
+      Attributes:
+          - commands
+              (dict) : A dictionary of all of the
+                       available commands.
+      """
 
-        self.commands = {
-            'chat'  : self.chat,
-            'create': self.create,
-            'remove': self.remove_item,
-            'exit'  : self.exit_menu
-        }
+      self.commands = {
+          'chat': self.chat,
+          'create': self.create,
+          'remove': self.remove_item,
+          'exit': self.exit_menu
+      }
 
-        super().__init__(self.commands, "models", render_prompt)
+      super().__init__(self.commands, "models", render_prompt)
 
-    def chat(self):
-        """
-        ~ Start chatting with the selected LLM model. ~
-        """
+   def chat(self):
+      """
+      ~ Start chatting with the selected LLM model. ~
+      """
 
-        print("work in progress...")
+      print("work in progress...")
 
-    def create(self):
-        """
-        ~ Create a new model. ~
-        """
+   def create(self):
+      """
+      ~ Create a new model. ~
+      """
 
-        print("work in progress...")
+      print("work in progress...")

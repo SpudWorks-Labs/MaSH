@@ -36,153 +36,153 @@ from utilities.utils import clear
 
 
 class Menu:
-    """
-    ~ Template class for the menus. ~ 
+   """
+   ~ Template class for the menus. ~ 
 
-    Functions:
-        - __init__        : Initialize the menu template.
-        - start           : Start the menu and render it.
-        - render_items    : Render the items found.
-        - render_commands : Render the availablecommands.
-        - render_prompt   : Render the command prompt.
-        - render          : Render the entire menu.
-        - remove_item     : Remove and item from the list.
-        - exit_menu       : Exit the menu.
+   Functions:
+       - __init__        : Initialize the menu template.
+       - start           : Start the menu and render it.
+       - render_items    : Render the items found.
+       - render_commands : Render the availablecommands.
+       - render_prompt   : Render the command prompt.
+       - render          : Render the entire menu.
+       - remove_item     : Remove and item from the list.
+       - exit_menu       : Exit the menu.
 
-    """
+   """
 
-    def __init__(self, commands, menu, display_prompt):
-        """
-        ~ Initialize the Menu Template. ~
+   def __init__(self, commands, menu, display_prompt):
+      """
+      ~ Initialize the Menu Template. ~
 
-        Arguments:
-            - commands
-                (dict)     : A dictionary of available
-                             commands.
-            - menu
-                (str)      : The name of the menu.
-            - render_prompt 
-                (function) : Render the command prompt.
+      Arguments:
+          - commands
+              (dict)     : A dictionary of available
+                           commands.
+          - menu
+              (str)      : The name of the menu.
+          - render_prompt 
+              (function) : Render the command prompt.
 
-        Attributes:
-            - commands
-                (dict)     : Equals commands argument.
-            - menu
-                (str)      : Equals the menu argument.
-            - render_prompt
-                (function) : Equals the render_prompt
-                             argument.
-            - items
-                (list)     : A list of all of the items.
-            - _rendering
-                (bool)     : State of if the menu is
-                             rendering.
-        """
+      Attributes:
+          - commands
+              (dict)     : Equals commands argument.
+          - menu
+              (str)      : Equals the menu argument.
+          - render_prompt
+              (function) : Equals the render_prompt
+                           argument.
+          - items
+              (list)     : A list of all of the items.
+          - _rendering
+              (bool)     : State of if the menu is
+                           rendering.
+      """
 
-        self.commands = commands
-        self.menu = menu
-        self.display_prompt = display_prompt
-        self.items = read_database(self.menu)
-        self._rendering = True
+      self.commands = commands
+      self.menu = menu
+      self.display_prompt = display_prompt
+      self.items = read_database(self.menu)
+      self._rendering = True
 
-    def start(self):
-        """
-        ~ Start the rendering and render the menu. ~
-        """
+   def start(self):
+      """
+      ~ Start the rendering and render the menu. ~
+      """
 
-        self._rendering = True
-        self.render()
-    
-    def render_items(self):
-        """
-        ~ Render all of the items for the menu. ~
-        """
+      self._rendering = True
+      self.render()
 
-        # ~ Check if there are items in the list. ~ #
-        
-        self.items = read_database(self.menu)
+   def render_items(self):
+      """
+      ~ Render all of the items for the menu. ~
+      """
 
-        if self.items:
-            print("Here are the available items:\n")
+      # ~ Check if there are items in the list. ~ #
 
-            # ~ Display the items. ~ #
-            for item in self.items:
-                head = f"~~~ {item['name']} ~~~"
+      self.items = read_database(self.menu)
 
-                if self.menu == 'projects':
-                    body = item['path']
-                elif self.menu == 'assistants':
-                    body = item['desc']
-                
-                print(f"{head}\n{body}\n")
+      if self.items:
+         print("Here are the available items:\n")
 
-        else:
-            print("There are no items here!\n")
+         # ~ Display the items. ~ #
+         for item in self.items:
+            head = f"~~~ {item['name']} ~~~"
 
-    def render_commands(self, command_list):
-        """
-        ~ Render all of the available commands. ~
+            if self.menu == 'projects':
+               body = item['path']
+            elif self.menu == 'assistants':
+               body = item['desc']
 
-        Arguments:
-            - command_list
-                (list) : A list of all the available
-                         commands.
-        """
+            print(f"{head}\n{body}\n")
 
-        # ~ Display each command in a 3 per row format. ~ #
-        for i, command in enumerate(command_list, 1):
-            print(f"\t{command}", end='\t')
+      else:
+         print("There are no items here!\n")
 
-            if i % 3 == 0:
-                print('\n\n')
+   def render_commands(self, command_list):
+      """
+      ~ Render all of the available commands. ~
 
-    def render_prompt(self, command_list):
-        """
-        ~ Render the command prompt. ~
+      Arguments:
+          - command_list
+              (list) : A list of all the available
+                       commands.
+      """
 
-        Arguments:
-            - command_list
-                (list) : A list containing the available
-                         commands.
-        """
+      # ~ Display each command in a 3 per row format. ~ #
+      for i, command in enumerate(command_list, 1):
+         print(f"\t{command}", end='\t')
 
-        user_input = self.display_prompt()
+         if i % 3 == 0:
+            print('\n\n')
 
-        # ~ Check for the command ~ #
-        # ~ and run its method.   ~ #
-        if user_input in command_list:
-            self.commands[user_input]()
+   def render_prompt(self, command_list):
+      """
+      ~ Render the command prompt. ~
 
-    def render(self):
-        """
-        ~ Render the entire menus information. ~
-        """
+      Arguments:
+          - command_list
+              (list) : A list containing the available
+                       commands.
+      """
 
-        # ~ The  menu rendering loop. ~ #
-        while self._rendering:
-            clear()
+      user_input = self.display_prompt()
 
-            self.render_items()
-            
-            print("\n\n")
-            command_list = list(self.commands.keys())
+      # ~ Check for the command ~ #
+      # ~ and run its method.   ~ #
+      if user_input in command_list:
+         self.commands[user_input]()
 
-            self.render_commands(command_list)
-            self.render_prompt(command_list)
+   def render(self):
+      """
+      ~ Render the entire menus information. ~
+      """
 
-        clear()
+      # ~ The  menu rendering loop. ~ #
+      while self._rendering:
+         clear()
 
-    def remove_item(self):
-        """
-        ~ Remove an item from the items list. ~
-        """
+         self.render_items()
 
-        name = input("Item Name >>> ")
-        remove_database(self.menu, name)
+         print("\n\n")
+         command_list = list(self.commands.keys())
 
-    def exit_menu(self):
-        """
-        ~ Exit the menu. ~
-        """
+         self.render_commands(command_list)
+         self.render_prompt(command_list)
 
-        self._rendering = False
+      clear()
+
+   def remove_item(self):
+      """
+      ~ Remove an item from the items list. ~
+      """
+
+      name = input("Item Name >>> ")
+      remove_database(self.menu, name)
+
+   def exit_menu(self):
+      """
+      ~ Exit the menu. ~
+      """
+
+      self._rendering = False

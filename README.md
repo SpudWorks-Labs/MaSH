@@ -7,6 +7,7 @@ project management, and AI, directly into your command line.
 ---
 
 ## Why MaSH?
+
 Context-switching is a "flow-state" killer. Developers
 lose hours every week jumping between their terminal,
 browser-based AI chats, and project management dashboards.
@@ -16,6 +17,7 @@ prefix, you access a suite of workforce tools without
 ever leaving your terminal.
 
 ### Features (The MVP)
+
 * **@>ai**: Integrated AI assistants with tool-calling
 capabilities.
 * **@>projects**: A built-in manager to track and pivot
@@ -24,6 +26,7 @@ between projects.
 ---
 
 ## Installation & Quickstart
+
 ```bash
 # ~ First, clone the repo and enter that directory. ~ #
 git clone https://codeberg.org/SpudWorks/MaSH
@@ -43,6 +46,7 @@ python src/main.py
 ---
 
 ## Phase Roadmap
+
 **Phase 1; The Terminal Emulator:**
     A customizable terminal prototype built in Python.
 
@@ -59,4 +63,5 @@ For more info, check [ARCHITECTURE](docs/ARCHITECTURE.md)
 ---
 
 ## Important Acknowledgements
+
 Created by Human Developers using AI Assistance.

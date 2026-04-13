@@ -41,36 +41,36 @@ from utilities.database import init_database
 
 
 class Mash:
-    """
-    ~ Handles the main terminal program. ~
+   """
+   ~ Handles the main terminal program. ~
 
-    Functions:
-        __init__ : Initilaize the terminal program.
-        execute  : Execute the main terminal loop.
-    """
+   Functions:
+       __init__ : Initilaize the terminal program.
+       execute  : Execute the main terminal loop.
+   """
 
-    def __init__(self):
-        """
-        ~ Initialize the terminal program. ~
+   def __init__(self):
+      """
+      ~ Initialize the terminal program. ~
 
-        Attributes:
-            - terminal
-                (Terminal) : An instance of the class that
-                             handles the terminal logic.
-        """
-        init_database()
-        self.terminal = Terminal()
-        self.terminal.welcome_message()
+      Attributes:
+          - terminal
+              (Terminal) : An instance of the class that
+                           handles the terminal logic.
+      """
+      init_database()
+      self.terminal = Terminal()
+      self.terminal.welcome_message()
 
-    def execute(self):
-        """
-        ~ Execute the main program loop. ~
-        """
+   def execute(self):
+      """
+      ~ Execute the main program loop. ~
+      """
 
-        self.terminal.prompt_menu()
+      self.terminal.prompt_menu()
 
 
 # ~ Ran as the main file. ~ #
 if __name__ == '__main__':
-    mash = Mash()
-    mash.execute()
+   mash = Mash()
+   mash.execute()

@@ -34,69 +34,69 @@ from validation.project_validation import *
 
 
 class EditMenu:
-    def __init__(self, project):
-        """
-        ~ Initialize the edit menu variables. ~
+   def __init__(self, project):
+      """
+      ~ Initialize the edit menu variables. ~
 
-        Argumetns:
-            - project (dict) : A dictionary containing the
-              information for the project.
-        """
+      Argumetns:
+          - project (dict) : A dictionary containing the
+            information for the project.
+      """
 
-        self.project = project
+      self.project = project
 
-    def process_cmd(self):
-        """
-        ~ Process the command to change project settings. ~
-        """
+   def process_cmd(self):
+      """
+      ~ Process the command to change project settings. ~
+      """
 
-        user_input = input(" >>> ")
+      user_input = input(" >>> ")
 
-        # ~ Change the name of the project. ~ #
-        if user_input == 'name':
-            name = str(ProjectName())
-            update_database(
-                'projects', self.name,
-                {'name': name}
-            )
+      # ~ Change the name of the project. ~ #
+      if user_input == 'name':
+         name = str(ProjectName())
+         update_database(
+             'projects', self.name,
+             {'name': name}
+         )
 
-        # ~ Change the projects working path. ~ #
-        elif user_input == 'path':
-            path = str(ProjectPath())
-            update_database(
-                'projects', self.name,
-                {'path': path}
-            )
+      # ~ Change the projects working path. ~ #
+      elif user_input == 'path':
+         path = str(ProjectPath())
+         update_database(
+             'projects', self.name,
+             {'path': path}
+         )
 
-        # ~ Change repo link for saving the project. ~ #
-        elif user_input == 'repo':
-            repos = str(ProjectRepos())
-            update_database(
-                'projects', self.name,
-                {'repos': repos}
-            )
+      # ~ Change repo link for saving the project. ~ #
+      elif user_input == 'repo':
+         repos = str(ProjectRepos())
+         update_database(
+             'projects', self.name,
+             {'repos': repos}
+         )
 
-        # ~ Run the project with the set rule. ~ #
-        elif user_input == 'run':
-            # Maybe ask for the command that runs the file
-            # and the path of the file.
-            run_command = input("Run Command >>> ")
-            update_database(
-                'projects', self.name,
-                {'run_command': run_command}
-            )
+      # ~ Run the project with the set rule. ~ #
+      elif user_input == 'run':
+         # Maybe ask for the command that runs the file
+         # and the path of the file.
+         run_command = input("Run Command >>> ")
+         update_database(
+             'projects', self.name,
+             {'run_command': run_command}
+         )
 
-    def display(self):
-        """
-        ~ Display the edit project settings menu. ~
-        """
+   def display(self):
+      """
+      ~ Display the edit project settings menu. ~
+      """
 
-        print("Project Settings:")
+      print("Project Settings:")
 
-        for key, value in self.project.items():
-            print(f"{key} = {value}")
-       
-        print("Type the key you want to edit.")
-        print("(i.e. `name`)")
+      for key, value in self.project.items():
+         print(f"{key} = {value}")
 
-        self.process_cmd()
+      print("Type the key you want to edit.")
+      print("(i.e. `name`)")
+
+      self.process_cmd()

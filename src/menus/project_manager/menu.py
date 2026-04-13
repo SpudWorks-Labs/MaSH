@@ -39,74 +39,74 @@ from validation.project_validation import *
 
 
 class ProjectMenu(Menu):
-    """
-    ~ The Project Menu logic and information. ~
+   """
+   ~ The Project Menu logic and information. ~
 
-    Inherits Menu Class
+   Inherits Menu Class
 
-    Functions:
-        - __init__       : Initialize the project menu.
-        - import_project : Import a new project.
-    """
+   Functions:
+       - __init__       : Initialize the project menu.
+       - import_project : Import a new project.
+   """
 
-    def __init__(self, render_prompt):
-        """
-        ~ Initialize the project manager menu. ~
+   def __init__(self, render_prompt):
+      """
+      ~ Initialize the project manager menu. ~
 
-        Arguments:
-            - render_prompt
-                (function) : The function to render the
-                             customized prompt.
+      Arguments:
+          - render_prompt
+              (function) : The function to render the
+                           customized prompt.
 
-        Attributes:
-            - commands
-                (dict) : A dictionary of all the available
-                         commands.
-        """
+      Attributes:
+          - commands
+              (dict) : A dictionary of all the available
+                       commands.
+      """
 
-        self.commands = {
-            'import': self.import_project,
-            'remove': self.remove_item,
-            'select': self.select_project,
-            'exit'  : self.exit_menu
-        }
-        super().__init__(
-            self.commands,
-            "projects",
-            render_prompt
-        )
+      self.commands = {
+          'import': self.import_project,
+          'remove': self.remove_item,
+          'select': self.select_project,
+          'exit': self.exit_menu
+      }
+      super().__init__(
+          self.commands,
+          "projects",
+          render_prompt
+      )
 
-    def select_project(self):
-        """
-        ~ Select the project to work on. ~
-        """
+   def select_project(self):
+      """
+      ~ Select the project to work on. ~
+      """
 
-        name = input("Projects Name >>> ")
+      name = input("Projects Name >>> ")
 
-        projects = read_database('projects')
-        project_names = [project['name'] for project in projects]
+      projects = read_database('projects')
+      project_names = [project['name'] for project in projects]
 
-        if name in project_names:
-            for project in projects:
-                if name == project['name']:
-                    ProjectDisplay(project).display()
+      if name in project_names:
+         for project in projects:
+            if name == project['name']:
+               ProjectDisplay(project).display()
 
-    def import_project(self):
-        """
-        ~ Import a new project into the items list. ~
-        """
+   def import_project(self):
+      """
+      ~ Import a new project into the items list. ~
+      """
 
-        try:
-            project = Project()
+      try:
+         project = Project()
 
-            insert_database("projects", {
-                'name': project.name, 
-                'path': project.path,
-                'repos': project.repos,
-                'run_command': project.run_command
-            })
+         insert_database("projects", {
+             'name': project.name,
+             'path': project.path,
+             'repos': project.repos,
+             'run_command': project.run_command
+         })
 
-        except Exception as e:
-            print(e)
+      except Exception as e:
+         print(e)
 
-            input("Press ENTER to continue...")
+         input("Press ENTER to continue...")

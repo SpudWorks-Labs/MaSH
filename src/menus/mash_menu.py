@@ -35,7 +35,7 @@ from math import ceil
 import os
 import shutil
 import time
-    
+
 # ~ Import Third-Party Modules. ~ #
 from prompt_toolkit import HTML, print_formatted_text
 
@@ -48,7 +48,7 @@ from utilities.utils import clear
 
 
 MSG = "Welcome to MaSH: The Productive Terminal"
-MASH_LOGO = [            
+MASH_LOGO = [
     r" ______   ______   _____   ________  ___   ___ ",
     r"|      | |      | / __  | /   _____)|   | |   |",
     r"|   ^   V   ^   ||_/  | |(   (_____ |   |_|   |",
@@ -61,94 +61,93 @@ MASH_LOGO = [
 
 
 class Terminal:
-    """
-    ~ Handle the Terminal logic. ~
+   """
+   ~ Handle the Terminal logic. ~
 
-    Functions:
-        - __init__        : Initialize the terminal data.
-        - welcome_message : Display the welcome message.
-        - prompt_menu     : Run the prompt logic.
-    """
+   Functions:
+       - __init__        : Initialize the terminal data.
+       - welcome_message : Display the welcome message.
+       - prompt_menu     : Run the prompt logic.
+   """
 
-    def __init__(self):
-        """
-        ~ Initialize the data used for the screens. ~
+   def __init__(self):
+      """
+      ~ Initialize the data used for the screens. ~
 
-        Attributes:
-            - cwd
-                (str)               : The current working
-                                      directory.
-            - processor 
-                (CommandProcessor) : The class that handles
-                                     user input as command.
-            - _running
-                (bool)             : Holds the state of the
-                                     terminal.
-        """
+      Attributes:
+          - cwd
+              (str)               : The current working
+                                    directory.
+          - processor 
+              (CommandProcessor) : The class that handles
+                                   user input as command.
+          - _running
+              (bool)             : Holds the state of the
+                                   terminal.
+      """
 
-        self.cwd = os.getcwd()
-        self.processor = CommandProcessor()
-        self._running = True
+      self.cwd = os.getcwd()
+      self.processor = CommandProcessor()
+      self._running = True
 
-    def render_logo(self):
-        # ~ Render the Logo. ~ #
-        for line in MASH_LOGO:
-            if line.startswith('<'):
-                print_formatted_text(HTML(line))
-            else:
-                print_formatted_text(line)
+   def render_logo(self):
+      # ~ Render the Logo. ~ #
+      for line in MASH_LOGO:
+         if line.startswith('<'):
+            print_formatted_text(HTML(line))
+         else:
+            print_formatted_text(line)
 
-            time.sleep(0.07)
-            
-        # ~ Render the seperator. ~ #
-        print_formatted_text(
-            HTML(f"<ansiblue>{'-' * 40}</ansiblue>")
-        )
-        time.sleep(0.1)
+         time.sleep(0.07)
 
-    def welcome_message(self):
-        """
-        ~ Display the welcome banner to the user. ~
-        """
+      # ~ Render the seperator. ~ #
+      print_formatted_text(
+          HTML(f"<ansiblue>{'-' * 40}</ansiblue>")
+      )
+      time.sleep(0.1)
 
-        clear()
+   def welcome_message(self):
+      """
+      ~ Display the welcome banner to the user. ~
+      """
 
-        self.render_logo()
+      clear()
 
-        # ~ Display command message. ~ #
-        cmds_msg = "(`help` and `@>??`) or <b>exit</b>" 
-        msg = f"Type a command {cmds_msg} to leave MaSH"
+      self.render_logo()
 
-        print_formatted_text(
-            HTML(
-                f"<ansigreen>{msg}</ansigreen>"
-            ),
-            end='\n\n'
-        )
-        time.sleep(0.2)
+      # ~ Display command message. ~ #
+      cmds_msg = "(`help` and `@>??`) or <b>exit</b>"
+      msg = f"Type a command {cmds_msg} to leave MaSH"
 
+      print_formatted_text(
+          HTML(
+              f"<ansigreen>{msg}</ansigreen>"
+          ),
+          end='\n\n'
+      )
+      time.sleep(0.2)
 
-    def prompt_menu(self):
-        """
-        ~ Display the prompt menu. ~
-        """
-        
-        # ~ Prompt loop. ~ #
-        while self._running:
-            cmd = display_prompt()
+   def prompt_menu(self):
+      """
+      ~ Display the prompt menu. ~
+      """
 
-            # ~ Exit the terminal. ~ #
-            if cmd.lower() == 'exit':
-                self._running = False
-                continue
+      # ~ Prompt loop. ~ #
+      while self._running:
+         cmd = display_prompt()
 
-            # ~ Check the current directoy. ~ #
-            elif cmd.lower() == 'cwd':
-                print(self.cwd)
-                continue
+         # ~ Exit the terminal. ~ #
+         if cmd.lower() == 'exit':
+            self._running = False
+            continue
 
-            # ~ Process the command. ~ #
-            cwd = self.processor.process_command(cmd)
+         # ~ Check the current directoy. ~ #
+         elif cmd.lower() == 'cwd':
+            print(self.cwd)
+            continue
 
-            if cwd:
-                self.cwd = cwd
+         # ~ Process the command. ~ #
+         cwd = self.processor.process_command(cmd)
+
+         if cwd:
+            self.cwd = cwd
